@@ -1,0 +1,18 @@
+{
+   "General":{
+      "auth_type":"DB"
+   },
+   "DB":{
+      "server_ip":"localhost",
+      "username":"root",
+      "password":"toor",
+      "dbname":"Monitor_vital",
+      "charset":"utf8mb4"
+   },
+   "ADDS":{
+      "server_ip":"192.168.2.1",
+      "username":"Administrador",
+      "pass":"abc123.",
+      "dn":"victor.local"
+   }
+}

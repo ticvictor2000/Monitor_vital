@@ -1,0 +1,131 @@
+/* IMPORT FONTS */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+
+/* GENERAL STYLES */
+
+body {
+     font-family: 'Montserrat', sans-serif;
+     background-image: url('../../assets/img/mountain.jpg');
+     background-size: cover;
+}
+
+/* DIV AUTH */
+
+.auth {
+     margin: 3% 10% 10% 10%;
+     padding: 3%;
+     border: 4px solid blue;
+     border-radius: 30px;
+}
+
+/* TOP TEXT */
+
+.top_text {
+     text-align: center;
+}
+
+.text_info {
+     font-size: 3em;
+}
+
+.error {
+     color: red;
+     font-size: 1.5rem;
+}
+
+/* SIGNS MONITOR STYLES */
+
+.vital_sign_monitor {
+     display: flex;
+     text-align: center;
+     padding: 1%;
+     background-position: top left, top right;
+     color: #14B51B;
+     font-family: 'Source Code Pro', monospace;
+     font-family: 'Exo 2', sans-serif;
+     text-shadow: 0 0 4px #14B51B;
+}
+
+.monitor_line {
+     max-width: 1000px;
+     margin: 0 auto;
+}
+
+.col-3 {
+     width: fit-content;
+     float: left;
+}
+
+.datetime {
+     width: fit-content;
+     padding-left: 4rem;
+}
+
+.col-9 {
+     width: 16rem;
+     float: left;
+}
+
+
+.uiBack {
+     stroke: white;
+     stroke-opacity: 0.18;
+     stroke-width: 1;
+}
+
+.number-1 {
+     font-size: 4rem;
+     text-align: center;
+     padding-left: 2.1rem;
+}
+.number-1 span {
+     font-size: 2rem;
+     position: relative;
+     top: -2rem;
+     opacity: 1;
+     animation: beat .5s infinite;
+}
+
+.EKG {
+     background: url('../../assets/gif/vital.gif');
+     height: 9rem;
+     width: 16rem;
+}
+
+@keyframes beat {
+     0% {
+          opacity: 1;
+     }
+     70% {
+          opacity: .3;
+     }
+     100% {
+          opacity: 1;
+     }
+}
+
+/* FORM LOGIN */
+
+#form_login {
+     text-align: center;
+
+}
+
+#form_login input {
+     font-family: 'Montserrat', sans-serif;
+     border: 1px solid grey;
+     border-radius: 15em;
+     font-size: 1.5rem;
+     padding: 1% 1%;
+     margin: 0.5% 0.5%;
+}
+
+#form_login button {
+     font-family: 'Montserrat', sans-serif;
+     border: 1px solid grey;
+     border-radius: 15em;
+     font-size: 1.5rem;
+     padding: 1% 1%;
+     margin: 0.5% 0.5%;
+}

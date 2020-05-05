@@ -1,0 +1,14 @@
+{
+   "require":{
+      "phpseclib\/phpseclib":"^2.0"
+   },
+   "repositories":[
+      {
+         "type":"composer",
+         "url":"https:\/\/www.phpclasses.org\/"
+      },
+      {
+         "packagist":false
+      }
+   ]
+}
