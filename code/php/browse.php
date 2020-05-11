@@ -92,6 +92,7 @@ for ($i=0; $i < count($clients_all); $i++) {
                $clients_to_verify[$iic]['MACEQ'] = $maceq;
                $clients_to_verify[$iic]['NAME'] = $client[$iic]['NAME'];
                $clients_to_verify[$iic]['TYPE'] = $client[$iic]['TYPE'];
+               $clients_to_verify[$iic]['IP_ADDR'] = $client[$iic]['IP_ADDR'];
           } else {
                // That client is not in the database, we proceed to create it
                $clients_to_create[$iic]['MACEQ'] = $maceq;
@@ -101,6 +102,61 @@ for ($i=0; $i < count($clients_all); $i++) {
           }
      }
 }
+
+// Verify exixtsing client
+
+if (count($clients_to_verify)>0) {
+     foreach ($clients_to_verify as $client_to_verify) {
+          if ($client_to_verify['TYPE'] == 'Network Device') {
+               // We check that in the port of that Network Device has a NetDevice(Client)
+               $is_client_net = $db->ClientIsNd($pdo,$client_to_verify['MACND'],$client_to_verify['NAME']);
+               if (!$is_client_net) {
+                    // That is not a network device, we need to update that port
+                    $updport = $db->UpdNCliPort($pdo,$client_to_verify['MACND'],$client_to_verify['NAME'],$client_to_verify['MACEQ'],$client_to_verify['IP_ADDR']);
+
+                    if (is_string($updport)) {
+                         newLog($updport, 'Updating Port Data',4);
+                         die();
+                    } else {
+                         // Port updated successful, now we update the last seen time of network devices
+                         $db->updLastSeen($pdo);
+                    }
+               } else {
+                    if (is_string($is_client_net)) {
+                         newLog($is_client_net,'Verificar que el cliente no se ha movido',4);
+                         die();
+                    }
+                    // In that ND Port is a Network Client
+                    // We will update the last seen time
+                    $db->updLastSeen($pdo);
+               }
+          } else {
+               // In the port there is a client, we check if client's MAC match with DB MAC for that port
+               $match_port_mac = $db->checkPortMac($pdo,$client_to_verify['NAME'],$client_to_verify['MACEQ'],$client_to_verify['MACND']);
+               if (!$match_port_mac) {
+                    // The client wasn't on that port
+                    $upd_cli_port = $db->UpdCliPort($pdo,$client_to_verify['MACEQ'],$client_to_verify['MACND'],$client_to_verify['IP_ADDR'],$client_to_verify['NAME']);
+                    if (is_string($upd_cli_port)) {
+                         newLog($upd_cli_port, 'Updating Port Data',4);
+                         die();
+                    } else {
+                         // Port updated successful
+                         // We now to update the last seen time
+                         $db->updLastSeen($pdo,$client_to_verify['MACEQ']);
+                    }
+               } else {
+                    if (is_string($match_port_mac)) {
+                         newLog($is_client_net,'Verificar que el cliente no se ha movido',4);
+                         die();
+                    }
+                    // The client was on that port, we update the last seen time
+                    $db->updLastSeen($pdo,$client_to_verify['MACEQ']);
+               }
+
+          }
+     }
+}
+
 
 // Create new client
 
@@ -118,38 +174,12 @@ if (count($clients_to_create)>0) {
           }
           $clients_to_create_sql .= "UPDATE Ports SET IP_ADDR='$ipeq',MACEQ='$maceq' WHERE NAME LIKE '$pname_prepared';\n";
      }
-
      $new_clients = $db->newClient($pdo,$clients_to_create_sql);
      if (is_string($new_clients)) {
           newLog($new_clients,'Crear nuevos clientes detectados en la DB',4);
           die();
      }
 }
-
-// Verify exixtsing client
-
-if (count($clients_to_verify)>0) {
-     $pname_db_sql = "SELECT NAME,MACEQ FROM Ports WHERE MACEQ=''";
-     foreach ($clients_to_verify as $clients_to_verify) {
-          $maceq = $clients_to_verify['MACEQ'];
-          $pname_db_sql .= " OR MACEQ='$maceq' ";
-     }
-
-     var_dump($pname_db_sql);die();
-
-     $pname_db = $db->getPname($pdo,$pname_db_sql);
-     if (!is_array($pname_db)) {
-          newLog($pname_db,'No se han podido obtener los datos de los puertos',4);
-          die();
-     }
-
-}
-
-
-
-
-
-
 
 
 

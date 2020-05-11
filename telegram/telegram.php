@@ -1,21 +1,15 @@
 <?php
 
 $botToken = "1039832084:AAGTpRuO9lE92Xo6EbpnCywy5dkOdksG1hQ";
-
 $website = "https://api.telegram.org/bot".$botToken;
 
 $update = file_get_contents('php://input');
 $update = json_decode($update, TRUE);
-$modo = 0;
 
 $chatId = $update["message"]["chat"]["id"];
 $chatType = $update["message"]["chat"]["type"];
 $userId = $update["message"]['from']['id'];
 $firstname = $update["message"]['from']['username'];
-if ($firstname=="") {
-    $modo=1;
-    $firstname = $update["message"]['from']['first_name'];
-}
 
 
 if ($modo == 0) {
@@ -38,11 +32,11 @@ $message = substr(strstr($message," "), 1);
 //No requieren variables del usuario.
 switch ($command) {
     case '/test':
-        $response = "string";
+        $response = "Esto es un test";
         sendMessage($chatId, $response);
         break;
      case '/that':
-        $response = "string";
+        $response = "Esto es un that";
         sendMessage($chatId, $response);
         break;
 }

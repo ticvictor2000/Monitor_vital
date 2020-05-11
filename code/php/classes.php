@@ -104,15 +104,6 @@ class Db {
           return true;
      }
 
-     public function getPname($pdo,$sql) {
-          try {
-               $client_info= $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-          } catch (PDOException $e) {
-               return $e;
-          }
-          return $client_info;
-     }
-
      public function getBlankMac($pdo) {
           // Generate random mac
           $hex_chars = '0123456789ABCDEF';
@@ -163,6 +154,98 @@ class Db {
                }
           }
           return $random_ip;
+     }
+
+     public function ClientIsNd($pdo,$macnd,$pname) {
+          $pname_prepared = substr(trim($pname),0,2) . '%' . substr(trim($pname),2,5);
+          $is_nd_sql = "SELECT ID FROM Ports INNER JOIN Medical_eq ON Ports.MACEQ = Medical_eq.MACEQ ";
+          $is_nd_sql .= "WHERE Ports.NAME LIKE '$pname_prepared' AND Medical_eq.TYPE = 'Network Device' AND Ports.MACND='$macnd'";
+
+          try {
+               $is_nd = $pdo->query($is_nd_sql)->fetchAll(PDO::FETCH_ASSOC);
+          } catch (PDOException $e) {
+               return $e;
+          }
+          if (count($is_nd) == 0) {
+               return false;
+          } else {
+               return true;
+          }
+     }
+
+     public function UpdNCliPort($pdo,$macnd,$pname,$maceq,$ipnd) {
+          $pname_prepared = substr(trim($pname),0,2) . '%' . substr(trim($pname),2,5);
+          $datetime = date('Y:m:d H:i:s');
+          // Create new network device
+          try {
+               $new_client_net = $pdo->query("INSERT INTO Medical_eq VALUES ('$maceq','Network Device',null,null,'$datetime')");
+          } catch (PDOException $e) {
+               return $e;
+          }
+
+          try {
+               $update_port = $pdo->query("UPDATE Ports SET IP_ADDR='$ipnd',MACEQ='$maceq' WHERE MACND='$macnd' AND NAME LIKE '$pname_prepared'");
+          } catch (PDOException $e) {
+               return $e;
+          }
+          return true;
+     }
+
+     public function UpdCliPort($pdo,$maceq,$macnd,$ip_addr,$pname) {
+          $pname_prepared = substr(trim($pname),0,2) . '%' . substr(trim($pname),2,5);
+
+          try {
+               $delete_old_port_cli = $pdo->query("UPDATE Ports SET IP_ADDR=null,MACEQ=null WHERE MACEQ='$maceq'");
+          } catch (PDOException $e) {
+               return $e;
+          }
+
+
+          try {
+               $set_new_port_cli = $pdo->query("UPDATE Ports SET IP_ADDR='$ip_addr',MACEQ='$maceq' WHERE NAME LIKE '$pname_prepared' AND MACND='$macnd'");
+          } catch (PDOException $e) {
+               return $e;
+          }
+
+          return true;
+     }
+
+     public function ClearPortCli($pdo,$maceq) {
+          try {
+               $clear_port = $pdo->query("UPDATE Ports SET IP_ADDR=null,MACEQ=null WHERE MACEQ='$maceq'");
+          } catch (PDOException $e) {
+               return $e;
+          }
+          return true;
+     }
+
+     public function checkPortMac($pdo,$pname,$maceq,$macnd) {
+          $pname_prepared = substr(trim($pname),0,2) . '%' . substr(trim($pname),2,5);
+          try {
+               $check_port_mac = $pdo->query("SELECT ID FROM Ports WHERE NAME LIKE '$pname_prepared' AND MACND='$macnd' AND MACEQ='$maceq'")->fetchAll(PDO::FETCH_ASSOC);
+          } catch (PDOException $e) {
+               return $e;
+          }
+          if (count($check_port_mac) == 0) {
+               return false;
+          } else {
+               return true;
+          }
+     }
+
+     public function updLastSeen($pdo, $maceq = false) {
+          $datetime = date('Y-m-d H:i:s');
+          if (!$maceq) {
+               $sql = "UPDATE Medical_eq SET LAST_SEEN='$datetime' WHERE TYPE='Network Device'";
+          } else {
+               $sql = "UPDATE Medical_eq SET LAST_SEEN='$datetime' WHERE MACEQ='$maceq'";
+          }
+
+          try {
+               $upd_last_seen = $pdo->query($sql);
+          } catch (PDOException $e) {
+               return $e;
+          }
      }
 }
 
