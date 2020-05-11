@@ -1,18 +1,23 @@
 {
-   "General":{
-      "auth_type":"DB"
-   },
-   "DB":{
-      "server_ip":"localhost",
-      "username":"root",
-      "password":"toor",
-      "dbname":"Monitor_vital",
-      "charset":"utf8mb4"
-   },
-   "ADDS":{
-      "server_ip":"192.168.2.1",
-      "username":"Administrador",
-      "pass":"abc123.",
-      "dn":"victor.local"
-   }
+    "General": {
+        "auth_type": "DB"
+    },
+    "DB": {
+        "server_ip": "localhost",
+        "username": "root",
+        "password": "toor",
+        "dbname": "Monitor_vital",
+        "charset": "utf8mb4"
+    },
+    "ADDS": {
+        "server_ip": "192.168.2.1",
+        "username": "Administrador",
+        "pass": "abc123.",
+        "dn": "victor.local"
+    },
+    "Telegram": {
+        "BotToken": "1039832084:AAGTpRuO9lE92Xo6EbpnCywy5dkOdksG1hQ",
+        "AdminId": "240789415",
+        "GroupId": "-444966775"
+    }
 }

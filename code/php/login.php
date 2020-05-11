@@ -30,6 +30,7 @@ if (!$cnf) {
      loginError('Error interno','Error al abrir el fichero de configuración desde login.php',4);
      die();
 }
+fclose($cnf);
 
 $cnf_arr = json_decode(file_get_contents('../json/cnf.json'), true);
 if (!isset($cnf_arr['General'])) {

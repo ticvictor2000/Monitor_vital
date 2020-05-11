@@ -668,28 +668,82 @@ class CiscoNetDeviceTelnet {
      }
 }
 
-/* MOSTRAR INTERFACES */
-/*
+class Bot {
+     private $botToken;
+     private $website;
+     private $message_data;
+     private $adminId;
+     private $groupId;
 
-terminal length 0
-show interfaces
 
-*/
+     public function __construct() {
+          // Open file
+          $cnf = fopen(dirname(__FILE__, 2) . '/json/cnf.json','r');
+          if (!$cnf) {
+               loginError('Error interno','Error al abrir el fichero de configuración desde login.php',4);
+               die();
+          }
+          fclose($cnf);
 
-/* MOSTRAR MAC DE CLIENTES */
-/*
+          // Get token and generate website
 
-terminal length 0
-sh mac address-table DYNAMIC
+          $this->botToken = json_decode(file_get_contents(dirname(__FILE__, 2) . '/json/cnf.json'),true)['Telegram']['BotToken'];
+          $this->website = 'https://api.telegram.org/bot' . $this->botToken;
 
-*/
-/* OBTENER IP DE CLIENTES */
-/*
+          // Get admin data
+          $this->adminId = json_decode(file_get_contents(dirname(__FILE__, 2) . '/json/cnf.json'),true)['Telegram']['AdminId'];
+          $this->groupId = json_decode(file_get_contents(dirname(__FILE__, 2) . '/json/cnf.json'),true)['Telegram']['GroupId'];
+     }
 
-terminal length 0
-sh ip arp aa:aa:aa:aa:aa:aa
+     public function newMsg() {
+          // Get json and decode
+          $update = file_get_contents('php://input');
+          $update = json_decode($update, TRUE);
+          $message = $update["message"]["text"];
+          $command = explode(' ',trim($message))[0];
 
-*/
+          // Get data from message
+          $this->message_data = $update['message'];
+
+          // Return command
+          return $command;
+     }
+
+     public function get($dat) {
+          switch ($dat) {
+               case 'chatId':
+                    return $this->message_data['chat']['id'];
+                    break;
+               case 'all':
+                    return $this->message_data;
+                    break;
+          }
+     }
+
+     public function sendMessage($response,$chatId = 'F') {
+          if ($chatId == 'F') {
+               $chatId = $this->message_data['chat']['id'];
+          }
+          $url = $this->website . '/sendMessage?chat_id='.$chatId.'&parse_mode=HTML&text='.urlencode($response);
+          file_get_contents($url);
+     }
+
+     private function isAdmin() {
+          if ($this->message_data['from']['id'] == $this->adminId) {
+               return true;
+          } else {
+               return false;
+          }
+     }
+
+     private function isGroup() {
+          if ($this->message_data['chat']['id'] == $this->groupId) {
+               return true;
+          } else {
+               return false;
+          }
+     }
+}
 
 
 ?>
