@@ -670,7 +670,7 @@ class CiscoNetDeviceTelnet {
 
 class Bot {
      private $botToken;
-     private $website;
+     public $website;
      private $message_data;
      private $adminId;
      private $groupId;
@@ -728,7 +728,7 @@ class Bot {
           file_get_contents($url);
      }
 
-     private function isAdmin() {
+     public function isAdmin() {
           if ($this->message_data['from']['id'] == $this->adminId) {
                return true;
           } else {
@@ -736,7 +736,7 @@ class Bot {
           }
      }
 
-     private function isGroup() {
+     public function isGroup() {
           if ($this->message_data['chat']['id'] == $this->groupId) {
                return true;
           } else {

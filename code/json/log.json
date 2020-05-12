@@ -1,0 +1,69 @@
+{
+    "Logs": {
+        "Log_11-05-20_11-47-24": {
+            "FECHA": "11\/05\/20",
+            "HORA": "23:47:24",
+            "TIPO": "Test",
+            "MENSAJE": {
+                "message_id": 159,
+                "from": {
+                    "id": 240789415,
+                    "is_bot": false,
+                    "first_name": "V",
+                    "last_name": "F",
+                    "username": "Victor_Martinez_2000",
+                    "language_code": "es"
+                },
+                "chat": {
+                    "id": 240789415,
+                    "first_name": "V",
+                    "last_name": "F",
+                    "username": "Victor_Martinez_2000",
+                    "type": "private"
+                },
+                "date": 1589233644,
+                "text": "\/test",
+                "entities": [
+                    {
+                        "offset": 0,
+                        "length": 5,
+                        "type": "bot_command"
+                    }
+                ]
+            },
+            "GRAVEDAD": 1,
+            "DEBUG": {
+                "HTTPS": "on",
+                "SSL_TLS_SNI": "archermil.ddns.net",
+                "HTTP_HOST": "archermil.ddns.net",
+                "CONTENT_TYPE": "application\/json",
+                "CONTENT_LENGTH": "379",
+                "HTTP_CONNECTION": "keep-alive",
+                "HTTP_ACCEPT_ENCODING": "gzip, deflate",
+                "PATH": "\/usr\/bin:\/bin:\/usr\/sbin:\/sbin",
+                "SERVER_SIGNATURE": "",
+                "SERVER_SOFTWARE": "Apache\/2.4.34 (Unix) LibreSSL\/2.5.5 PHP\/7.1.33",
+                "SERVER_NAME": "archermil.ddns.net",
+                "SERVER_ADDR": "192.168.1.40",
+                "SERVER_PORT": "443",
+                "REMOTE_ADDR": "91.108.6.35",
+                "DOCUMENT_ROOT": "\/Users\/victor\/Sites",
+                "REQUEST_SCHEME": "https",
+                "CONTEXT_PREFIX": "",
+                "CONTEXT_DOCUMENT_ROOT": "\/Users\/victor\/Sites",
+                "SERVER_ADMIN": "you@example.com",
+                "SCRIPT_FILENAME": "\/Users\/victor\/Sites\/Monitor_Vital\/telegram\/telegram.php",
+                "REMOTE_PORT": "59170",
+                "GATEWAY_INTERFACE": "CGI\/1.1",
+                "SERVER_PROTOCOL": "HTTP\/1.1",
+                "REQUEST_METHOD": "POST",
+                "QUERY_STRING": "",
+                "REQUEST_URI": "\/Monitor_Vital\/telegram\/telegram.php",
+                "SCRIPT_NAME": "\/Monitor_Vital\/telegram\/telegram.php",
+                "PHP_SELF": "\/Monitor_Vital\/telegram\/telegram.php",
+                "REQUEST_TIME_FLOAT": 1589233644.624,
+                "REQUEST_TIME": 1589233644
+            }
+        },
+    }
+}
