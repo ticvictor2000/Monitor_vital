@@ -670,10 +670,12 @@ class CiscoNetDeviceTelnet {
 
 class Bot {
      private $botToken;
-     public $website;
+     private $website;
      private $message_data;
      private $adminId;
      private $groupId;
+     private $listMode;
+     private $listUsers;
 
 
      public function __construct() {
@@ -690,9 +692,12 @@ class Bot {
           $this->botToken = json_decode(file_get_contents(dirname(__FILE__, 2) . '/json/cnf.json'),true)['Telegram']['BotToken'];
           $this->website = 'https://api.telegram.org/bot' . $this->botToken;
 
-          // Get admin data
+          // Get admin and list data
           $this->adminId = json_decode(file_get_contents(dirname(__FILE__, 2) . '/json/cnf.json'),true)['Telegram']['AdminId'];
           $this->groupId = json_decode(file_get_contents(dirname(__FILE__, 2) . '/json/cnf.json'),true)['Telegram']['GroupId'];
+          $this->listMode = json_decode(file_get_contents(dirname(__FILE__, 2) . '/json/cnf.json'),true)['Telegram']['List']['Mode'];
+          $this->listUsers = json_decode(file_get_contents(dirname(__FILE__, 2) . '/json/cnf.json'),true)['Telegram']['List']['Users'];
+
      }
 
      public function newMsg() {
@@ -711,8 +716,26 @@ class Bot {
 
      public function get($dat) {
           switch ($dat) {
+               case 'listMode':
+                    return $this->listMode;
+                    break;
+               case 'listUsers':
+                    return $this->listUsers;
+                    break;
+               case 'chatType':
+                    return $this->message_data['chat']['type'];
+                    break;
+               case 'isBot':
+                    return $this->message_data['from']['is_bot'];
+                    break;
                case 'chatId':
                     return $this->message_data['chat']['id'];
+                    break;
+               case 'userId':
+                    return $this->message_data['from']['id'];
+                    break;
+               case 'adminId':
+                    return $this->adminId;
                     break;
                case 'all':
                     return $this->message_data;

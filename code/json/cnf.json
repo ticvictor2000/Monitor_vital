@@ -18,6 +18,13 @@
     "Telegram": {
         "BotToken": "1039832084:AAGTpRuO9lE92Xo6EbpnCywy5dkOdksG1hQ",
         "AdminId": "240789415",
-        "GroupId": "-444966775"
+        "GroupId": "-444966775",
+        "List": {
+            "Mode": "black",
+            "Users": [
+                "240789400",
+                "240789444"
+            ]
+        }
     }
 }
