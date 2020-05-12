@@ -1,0 +1,5 @@
+# Delete composer library tracking
+libs/vendor
+
+# Stop tracking log
+log.json*
