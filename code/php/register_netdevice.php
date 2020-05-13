@@ -77,6 +77,7 @@ if ($brand != 'cisco' && $brand != 'openwrt') {
 // Trying to connect to the Network Device
 
 if (!$ssh) {
+     // If not SSH, we try to connect via Telnet
      try {
           $tcon = new Telnet($ip);
      } catch (Exception $e) {
@@ -87,8 +88,13 @@ if (!$ssh) {
 }
 
 if ($ssh) {
-     echo 'En desarrollo';
-     die();
+     // Trying to connect via ssh
+     $sshc = new Net_SSH2($ip);
+     if (!@$sshc->getServerPublicHostKey()) {
+          echo 'Hubo un problema al conectarse al dispositivo de red vía SSH';
+          newLog('Error en la conexión SSH con el dispositivo ['.$ip.']','Formulario de registro de dispositivos de red',1);
+          die();
+     }
 }
 
 // Get MAC Addr of network device
@@ -124,7 +130,7 @@ if ($brand == 'cisco') {
           echo 'En desarrollo';
           die();
      }
-     if (isset($tcon) && isset($sshcon)) {
+     if (!isset($tcon) && !isset($sshc)) {
           echo 'No se ha conectado al dispositivo de red correctamente';
           newLog('No se ha conectado al dispositivo de red correctamente','Registro de dispositivos de red',1);
           die();
@@ -132,8 +138,49 @@ if ($brand == 'cisco') {
 }
 
 if ($brand == 'openwrt') {
-     echo 'En desarrollo';
-     die();
+     // Check if there is a Telnet connection active
+     if (isset($tcon)) {
+          // Future implementation
+          die();
+     }
+     // Check if there is a SSH connection
+     if (isset($sshc)) {
+          // Create new device
+          $wnd = new OpenWrtSshAP($sshc,$pass);
+
+          if ($wnd->login($pass)) {
+               $mac = $wnd->getMac();
+               // Add data to the object
+               $wnd->addData($mac,$type,$ip,$ssh,$telnet,$nports,$model);
+               $insert_db = $wnd->intoDB($pdo);
+               // Insert the object in the database
+               if (!$insert_db) {
+                    echo 'Error interno al agregar el dispositivo de red al sistema';
+                    newLog($insert_db,'Agregar dispositivos de red',4);
+                    die();
+               }
+               // Generate initial virtual ports for the device
+               $new_port = $db->newPort($pdo,'0',$mac);
+               if ($new_port) {
+                    echo "OK";
+               } else {
+                    echo 'Error interno';
+                    newLog($new_port,'Agregar puertos de un AP',4);
+                    die();
+               }
+          } else {
+               echo 'Contraseña incorrecta';
+               newLog('Autenticacion incorrecta','Autenticacion ssh dispositivo OpenWRT',1);
+               die();
+          }
+
+     }
+     // Error if no connection detected
+     if (!isset($tcon) && !isset($sshc)) {
+          echo 'No se ha conectado al dispositivo de red correctamente';
+          newLog('No se ha conectado al dispositivo de red correctamente','Registro de dispositivos de red',1);
+          die();
+     }
 }
 
 ?>

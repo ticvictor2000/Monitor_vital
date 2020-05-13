@@ -64,6 +64,123 @@
                 "REQUEST_TIME_FLOAT": 1589233644.624,
                 "REQUEST_TIME": 1589233644
             }
+        },
+        "Log_12-05-20_10-46-12": {
+            "FECHA": "12\/05\/20",
+            "HORA": "22:46:12",
+            "TIPO": "Evento de Seguridad del Bot de Telegram",
+            "MENSAJE": {
+                "TEXT": "Se ha intentado usar el bot con otro grupo no autorizado",
+                "DATA": {
+                    "message_id": 331,
+                    "from": {
+                        "id": 240789415,
+                        "is_bot": false,
+                        "first_name": "V",
+                        "last_name": "F",
+                        "username": "Victor_Martinez_2000",
+                        "language_code": "es"
+                    },
+                    "chat": {
+                        "id": -395921590,
+                        "title": "\u26b0\ufe0fCOFFIN DANCE\u26b0\ufe0f",
+                        "type": "group",
+                        "all_members_are_administrators": true
+                    },
+                    "date": 1589316371,
+                    "text": "\/respiradores@MonitorVitalBot",
+                    "entities": [
+                        {
+                            "offset": 0,
+                            "length": 29,
+                            "type": "bot_command"
+                        }
+                    ]
+                }
+            },
+            "GRAVEDAD": 3,
+            "DEBUG": {
+                "HTTPS": "on",
+                "SSL_TLS_SNI": "archermil.ddns.net",
+                "HTTP_HOST": "archermil.ddns.net",
+                "CONTENT_TYPE": "application\/json",
+                "CONTENT_LENGTH": "421",
+                "HTTP_CONNECTION": "keep-alive",
+                "HTTP_ACCEPT_ENCODING": "gzip, deflate",
+                "PATH": "\/usr\/bin:\/bin:\/usr\/sbin:\/sbin",
+                "SERVER_SIGNATURE": "",
+                "SERVER_SOFTWARE": "Apache\/2.4.34 (Unix) LibreSSL\/2.5.5 PHP\/7.1.33",
+                "SERVER_NAME": "archermil.ddns.net",
+                "SERVER_ADDR": "192.168.1.40",
+                "SERVER_PORT": "443",
+                "REMOTE_ADDR": "91.108.6.35",
+                "DOCUMENT_ROOT": "\/Users\/victor\/Sites",
+                "REQUEST_SCHEME": "https",
+                "CONTEXT_PREFIX": "",
+                "CONTEXT_DOCUMENT_ROOT": "\/Users\/victor\/Sites",
+                "SERVER_ADMIN": "you@example.com",
+                "SCRIPT_FILENAME": "\/Users\/victor\/Sites\/Monitor_Vital\/telegram\/telegram.php",
+                "REMOTE_PORT": "48578",
+                "GATEWAY_INTERFACE": "CGI\/1.1",
+                "SERVER_PROTOCOL": "HTTP\/1.1",
+                "REQUEST_METHOD": "POST",
+                "QUERY_STRING": "",
+                "REQUEST_URI": "\/Monitor_Vital\/telegram\/telegram.php",
+                "SCRIPT_NAME": "\/Monitor_Vital\/telegram\/telegram.php",
+                "PHP_SELF": "\/Monitor_Vital\/telegram\/telegram.php",
+                "REQUEST_TIME_FLOAT": 1589316371.906,
+                "REQUEST_TIME": 1589316371
+            }
+        },
+        "Log_13-05-20_10-21-09": {
+            "FECHA": "13\/05\/20",
+            "HORA": "22:21:09",
+            "TIPO": "Autenticacion ssh dispositivo OpenWRT",
+            "MENSAJE": "Autenticacion incorrecta",
+            "GRAVEDAD": 1,
+            "DEBUG": {
+                "HTTPS": "on",
+                "SSL_TLS_SNI": "archermil.ddns.net",
+                "HTTP_HOST": "archermil.ddns.net",
+                "HTTP_CONNECTION": "keep-alive",
+                "CONTENT_LENGTH": "85",
+                "HTTP_SEC_CH_UA": "\"Google Chrome 81\"",
+                "HTTP_ACCEPT": "*\/*",
+                "HTTP_X_REQUESTED_WITH": "XMLHttpRequest",
+                "HTTP_USER_AGENT": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/81.0.4044.138 Safari\/537.36",
+                "CONTENT_TYPE": "application\/x-www-form-urlencoded; charset=UTF-8",
+                "HTTP_ORIGIN": "https:\/\/archermil.ddns.net",
+                "HTTP_SEC_FETCH_SITE": "same-origin",
+                "HTTP_SEC_FETCH_MODE": "cors",
+                "HTTP_SEC_FETCH_DEST": "empty",
+                "HTTP_REFERER": "https:\/\/archermil.ddns.net\/Monitor_Vital\/view\/netdevices.php?",
+                "HTTP_ACCEPT_ENCODING": "gzip, deflate, br",
+                "HTTP_ACCEPT_LANGUAGE": "es-ES,es;q=0.9",
+                "HTTP_COOKIE": "PHPSESSID=40krj7l4mln51mfacitvk6qc1j",
+                "PATH": "\/usr\/bin:\/bin:\/usr\/sbin:\/sbin",
+                "SERVER_SIGNATURE": "",
+                "SERVER_SOFTWARE": "Apache\/2.4.34 (Unix) LibreSSL\/2.5.5 PHP\/7.1.33",
+                "SERVER_NAME": "archermil.ddns.net",
+                "SERVER_ADDR": "192.168.1.40",
+                "SERVER_PORT": "443",
+                "REMOTE_ADDR": "83.39.228.85",
+                "DOCUMENT_ROOT": "\/Users\/victor\/Sites",
+                "REQUEST_SCHEME": "https",
+                "CONTEXT_PREFIX": "",
+                "CONTEXT_DOCUMENT_ROOT": "\/Users\/victor\/Sites",
+                "SERVER_ADMIN": "you@example.com",
+                "SCRIPT_FILENAME": "\/Users\/victor\/Sites\/Monitor_Vital\/code\/php\/register_netdevice.php",
+                "REMOTE_PORT": "52034",
+                "GATEWAY_INTERFACE": "CGI\/1.1",
+                "SERVER_PROTOCOL": "HTTP\/1.1",
+                "REQUEST_METHOD": "POST",
+                "QUERY_STRING": "",
+                "REQUEST_URI": "\/Monitor_Vital\/code\/php\/register_netdevice.php",
+                "SCRIPT_NAME": "\/Monitor_Vital\/code\/php\/register_netdevice.php",
+                "PHP_SELF": "\/Monitor_Vital\/code\/php\/register_netdevice.php",
+                "REQUEST_TIME_FLOAT": 1589401268.086,
+                "REQUEST_TIME": 1589401268
+            }
         }
     }
 }

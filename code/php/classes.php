@@ -1,6 +1,8 @@
 <?php
 
 require_once dirname(__DIR__, 2) . '/libs/vendor/autoload.php';
+set_include_path(dirname(__DIR__, 2) . '/libs/ssh');
+require_once dirname(__DIR__, 2) . '/libs/ssh/Net/SSH2.php';
 
 class Db {
      private $server_ip;
@@ -246,6 +248,15 @@ class Db {
           } catch (PDOException $e) {
                return $e;
           }
+     }
+
+     public function newPort($pdo,$name,$macnd) {
+          try {
+               $new_port = $pdo->query("INSERT INTO Ports VALUES (null,'$name',null,null,'$macnd',null)");
+          } catch (PDOException $e) {
+               return $e;
+          }
+          return true;
      }
 }
 
@@ -765,6 +776,60 @@ class Bot {
           } else {
                return false;
           }
+     }
+}
+
+class OpenWrtSshAP {
+     private $sshc;
+     private $pass;
+     private $mac;
+     private $type;
+     private $ip_addr;
+     private $ssh;
+     private $telnet;
+     private $nports;
+     private $brand;
+     private $model;
+
+
+     public function __construct($sshc,$pass) {
+          $this->sshc = $sshc;
+          $this->pass = $pass;
+     }
+
+     public function login() {
+          if ($this->sshc->login('root',$this->pass)) {
+               return true;
+          } else {
+               return false;
+          }
+     }
+
+     public function getMac() {
+          $ifconfig = $this->sshc->exec('ifconfig wlan0');
+          $ifconfig_lines = explode("\n",$ifconfig);
+          $ifconfig_first_line = explode(' ',$ifconfig_lines[0]);
+          $mac = $ifconfig_first_line[9];
+          return $mac;
+     }
+
+     public function addData($mac,$type,$ip_addr,$ssh,$telnet,$nports,$model) {
+          $this->mac = $mac;
+          $this->type = $type;
+          $this->ip_addr = $ip_addr;
+          $this->ssh = $ssh;
+          $this->telnet = $telnet;
+          $this->nports = $nports;
+          $this->model = $model;
+     }
+
+     public function intoDB($pdo) {
+          try {
+               $new_cnd = $pdo->query("INSERT INTO Net_devices VALUES ('$this->mac','$this->type','$this->ip_addr','$this->ssh','$this->telnet','$this->nports','$this->brand','$this->model','$this->pass')");
+          } catch (PDOException $e) {
+               return $e;
+          }
+          return true;
      }
 }
 
