@@ -9,7 +9,7 @@
           <?php if(!isset($_SESSION)) : session_start(); endif; ?>
           <?php if(isset($_SESSION['user'])) : header('Location: view'); endif; ?>
 
-          <form class="c-form">
+          <form class="c-form login-form">
                <fieldset class="c-form__fieldset">
                     <legend class="c-form__title">
                          <span>Identifíquese</span>
@@ -35,8 +35,39 @@
 
                     <div class="u-spacer--sm"></div>
 
-                    <a class="c-form__link" id="forgot_btn">Solicitar acceso</a>
+                    <a class="c-form__link" id="forgot_btn" href="#">Solicitar acceso</a>
                     <button type="button" class="c-form__button u-ripple">Acceder</button>
+               </fieldset>
+          </form>
+
+          <form class="c-form forgot-form">
+               <fieldset class="c-form__fieldset">
+                    <legend class="c-form__title">
+                         <span>Solicitud de acceso</span>
+                         <br />
+                         <span>Si ha perdido su contrseña puede recuperarla introduciendo los siguientes datos</span>
+                    </legend>
+
+                    <div class="u-spacer--sm"></div>
+
+                    <label class="c-formGroup" for="name">
+                         <input class="c-formGroup__input u-ripple" type="text" id="name" placeholder="Nombre completo">
+                         <span class="c-formGroup__title">Nombre completo</span>
+                         <i class="c-formGroup__icon"><svg><use xlink:href="#icon-email" /></svg></i>
+                    </label>
+
+                    <div class="u-spacer"></div>
+
+                    <label class="c-formGroup" for="email">
+                         <input class="c-formGroup__input u-ripple" type="email" id="email" placeholder="Correo electrónico">
+                         <span class="c-formGroup__title">Correo electrónico</span>
+                         <i class="c-formGroup__icon"><svg><use xlink:href="#icon-email" /></svg></i>
+                    </label>
+
+                    <div class="u-spacer--sm"></div>
+
+                    <a class="c-form__link" id="access_btn" href="#">Acceder</a>
+                    <button type="button" class="c-form__button u-ripple">Enviar solicitud</button>
                </fieldset>
           </form>
 
@@ -52,7 +83,7 @@
                </symbol>
           </svg>
           <script type="text/javascript" src="code/js/index_time.js"></script>
-          <script type="text/javascript" src="code/js/index_forgot.js"></script>
+          <script type="text/javascript" src="code/js/index.js"></script>
      </body>
 
 </html>
