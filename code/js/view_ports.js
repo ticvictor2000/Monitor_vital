@@ -150,7 +150,7 @@ update_btn.onclick = function() {
                update_btn.style.display = 'none';
                error.innerHTML = 'Cargando...';
           },
-          success: function(data){
+          success: function(data) {
                if (data == false) {
                     error.innerHTML = 'Hubo un error interno, quizás no cambiaste nada';
                } else {

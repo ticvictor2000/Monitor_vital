@@ -7,6 +7,7 @@ CREATE TABLE Net_devices (
      NPORTS int(3) NOT NULL,
      BRAND varchar(50) NOT NULL,
      MODEL varchar(50) NOT NULL,
+		 LAST_SEEN date NOT NULL,
      PRIMARY KEY (MACND)
 );
 
