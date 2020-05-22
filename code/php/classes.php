@@ -797,6 +797,10 @@ class OpenWrtSshAP {
           $this->pass = $pass;
      }
 
+     public function setPass($pass) {
+          $this->pass = $pass;
+     }
+
      public function login() {
           if ($this->sshc->login('root',$this->pass)) {
                return true;
@@ -813,13 +817,14 @@ class OpenWrtSshAP {
           return $mac;
      }
 
-     public function addData($mac,$type,$ip_addr,$ssh,$telnet,$nports,$model) {
+     public function addData($mac,$type,$ip_addr,$ssh,$telnet,$nports,$brand,$model) {
           $this->mac = $mac;
           $this->type = $type;
           $this->ip_addr = $ip_addr;
           $this->ssh = $ssh;
           $this->telnet = $telnet;
           $this->nports = $nports;
+          $this->brand = $brand;
           $this->model = $model;
      }
 
@@ -830,6 +835,23 @@ class OpenWrtSshAP {
                return $e;
           }
           return true;
+     }
+
+     public function getClients($sshc,$macnd) {
+          $clients_raw = $sshc->exec('iw dev wlan0 station dump');
+          $clients_arr_raw = explode("\n",$clients_raw);
+          $clients_arr = array();
+          $clients_arr_i = 0;
+          for ($i=0; $i < count($clients_arr_raw); $i++) {
+               if (substr($clients_arr_raw[$i],0,7) == 'Station') {
+                    $clients_arr[$clients_arr_i]['NAME'] = 'Wlan' . $clients_arr_i;
+                    $clients_arr[$clients_arr_i]['TYPE'] = 'Not identified';
+                    $clients_arr[$clients_arr_i]['IP_ADDR'] = '';
+                    $clients_arr[$clients_arr_i]['MACEQ'] = mb_strtoupper(substr($clients_arr_raw[$i],8,17));
+                    $clients_arr_i++;
+               }
+          }
+          return $clients_arr;
      }
 }
 

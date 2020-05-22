@@ -32,6 +32,8 @@ type.onchange = function() {
                     for (var i = devices.options.length-1; i >= 0; i--) {
                          devices.options[i] = null;
                     }
+                    console.log(data);
+                    /*
                     var ldev = JSON.parse(data);
                     for (var i = 0; i < ldev.length; i++) {
                          var option = document.createElement('option');
@@ -42,6 +44,7 @@ type.onchange = function() {
                     devices.value = ldev[0]['MACND'];
                     devices.style.display = 'block';
                     devices.onchange();
+                    */
                }
           }
      });

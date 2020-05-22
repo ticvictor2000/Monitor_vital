@@ -68,7 +68,6 @@
                     <option value="1">Sí</option>
                     <option value="0">No</option>
                </select>
-               <input type="number" placeholder="Número de puertos" min="1" max="50" id="nports" />
                <select id="brand">
                     <option disabled selected value="null">--Marca del dispositivo--</option>
                     <option value="cisco">Cisco</option>

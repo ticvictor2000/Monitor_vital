@@ -5,7 +5,6 @@ form.onsubmit = function() {
      var ip = document.getElementById('ip').value;
      var telnet = document.getElementById('telnet').value;
      var ssh = document.getElementById('ssh').value;
-     var nports = document.getElementById('nports').value;
      var brand = document.getElementById('brand').value;
      var model = document.getElementById('model').value;
      var pass = document.getElementById('pass').value;
@@ -20,7 +19,6 @@ form.onsubmit = function() {
                ip: ip,
                telnet: telnet,
                ssh: ssh,
-               nports: nports,
                brand: brand,
                model: model,
                pass: pass

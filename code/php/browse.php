@@ -26,6 +26,7 @@ $ica = 0;
 foreach ($ndevs as $ndev) {
      // Check brand
      if ($ndev['BRAND'] == 'Cisco') {
+
           // Check supported protocol
           if (!$ndev['SSH']) {
                // Using telnet protocol
@@ -64,6 +65,28 @@ foreach ($ndevs as $ndev) {
                }
           }
      }
+
+     if ($ndev['BRAND'] == 'openwrt') {
+          // Check supported protocol
+          if (!$ndev['SSH']) {
+               // Use telnet
+          } else {
+               // Use ssh
+               $sshc = new Net_SSH2($ndev['IP_ADDR']);
+               if (!@$sshc->getServerPublicHostKey()) {
+                    echo 'Hubo un problema al conectarse al dispositivo de red vía SSH';
+                    newLog('Error en la conexión SSH con el dispositivo ['.$ip.']','Formulario de registro de dispositivos de red',4);
+                    die();
+               }
+               $wnd = new OpenWrtSshAP($sshc, $ndev['PASS']);
+               if (!$wnd->login()) {
+                    echo 'Hubo un problema al conectarse al dispositivo de red vía SSH';
+                    newLog('Error en la conexión SSH con el dispositivo ['.$ip.']','Formulario de registro de dispositivos de red',4);
+                    die();
+               }
+               $clients = $wnd->getClients($sshc,$ndev['MACND']);
+          }
+     }
      $clients_all[$ica]['MACND'] = $ndev['MACND'];
      $clients_all[$ica]['CLIENTS'] = $clients;
      $ica++;
@@ -77,6 +100,7 @@ if (!is_array($clients_db)) {
      die();
 }
 
+
 // Check which clients are contained in the database
 
 
@@ -86,6 +110,7 @@ for ($i=0; $i < count($clients_all); $i++) {
      $client = $clients_all[$i]['CLIENTS'];
      for ($iic=0; $iic < count($client); $iic++) {
           $maceq = $client[$iic]['MACEQ'];
+          echo $iic;
           if (searchMacDb($maceq,$clients_db) || $client[$iic]['TYPE']=='Network Device') {
                // That client is in the database
                $clients_to_verify[$iic]['MACND'] = $clients_all[$i]['MACND'];
@@ -102,6 +127,18 @@ for ($i=0; $i < count($clients_all); $i++) {
           }
      }
 }
+
+
+var_dump($clients_all);
+echo '<hr />';
+var_dump($clients_to_create);
+echo '<hr />';
+var_dump($clients_to_verify);
+die();
+
+
+
+
 
 // Verify exixtsing client
 
@@ -156,6 +193,8 @@ if (count($clients_to_verify)>0) {
           }
      }
 }
+
+
 
 
 // Create new client

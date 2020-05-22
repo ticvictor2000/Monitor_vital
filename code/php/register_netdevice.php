@@ -21,7 +21,6 @@ $type = trim($_POST['type']);
 $ip = trim($_POST['ip']);
 $telnet = trim($_POST['telnet']);
 $ssh = trim($_POST['ssh']);
-$nports = trim($_POST['nports']);
 $brand = trim($_POST['brand']);
 $model = trim($_POST['model']);
 $pass = trim($_POST['pass']);
@@ -55,12 +54,6 @@ if ($ssh != 0 && $ssh != 1) {
      if ($ssh != 'null') {
           newLog($_SESSION['user']['NAME'] . ' intentó modificar el valor del soporte SSH  con [' . $ssh . '] en el formulario de registro de equipamiento de red','Alerta de Seguridad',3);
      }
-     die();
-}
-
-if (!is_numeric($nports)) {
-     echo '<strong>El número de puertos no es un número</strong>';
-     newLog($_SESSION['user']['NAME'] . ' intentó modificar el valor del número de puertos con [' . $nports . '] en el formulario de registro de equipamiento de red','Alerta de Seguridad',3);
      die();
 }
 
@@ -114,15 +107,26 @@ if ($brand == 'cisco') {
           }
           // Get mac address
           $mac = $cnd->getMac($tcon);
+          // Get ports
+          $ports = $cnd->getPorts($tcon);
           // Add data to the network device
-          $cnd->addData($mac,$type,$ip,$ssh,$telnet,$nports,$model);
+          $cnd->addData($mac,$type,$ip,$ssh,$telnet,count($ports),$model);
           // Insert into database
           $insert_db = $cnd->intoDB($pdo);
           if (!$insert_db) {
-               echo 'Error interno al agregar el dispositivo de red al sistema';
+               echo 'Error interno al agregar el dispositivo de red al sistema, puede que el dispositivo ya exista';
                newLog($insert_db,'Agregar dispositivos de red',4);
                die();
           } else {
+
+               for ($i=0; $i < count($ports); $i++) {
+                    $new_port_db = $db->newPort($pdo,$ports[$i],$mac);
+                    if (is_string($new_port_db)) {
+                         echo 'Error interno al agregar el puerto del dispositivo de red al sistema';
+                         newLog($new_port_db,'Agregar puertos de los dispositivos de red',4);
+                         die();
+                    }
+               }
                echo 'Dispositivo añadido correctamente';
           }
      }
@@ -150,8 +154,9 @@ if ($brand == 'openwrt') {
 
           if ($wnd->login($pass)) {
                $mac = $wnd->getMac();
+               $clients = $wnd->getClients($sshc,$mac);
                // Add data to the object
-               $wnd->addData($mac,$type,$ip,$ssh,$telnet,$nports,$model);
+               $wnd->addData($mac,$type,$ip,$ssh,$telnet,count($clients),$brand,$model);
                $insert_db = $wnd->intoDB($pdo);
                // Insert the object in the database
                if (!$insert_db) {
@@ -159,15 +164,11 @@ if ($brand == 'openwrt') {
                     newLog($insert_db,'Agregar dispositivos de red',4);
                     die();
                }
-               // Generate initial virtual ports for the device
-               $new_port = $db->newPort($pdo,'0',$mac);
-               if ($new_port) {
-                    echo "OK";
-               } else {
-                    echo 'Error interno';
-                    newLog($new_port,'Agregar puertos de un AP',4);
-                    die();
+               // Generate initial virtual ports for the device (generate n ports as clients connected now)
+               foreach ($clients as $client) {
+                    $db->newPort($pdo,$client['NAME'],$mac);
                }
+               echo 'Dispositivo añadido correctamente';
           } else {
                echo 'Contraseña incorrecta';
                newLog('Autenticacion incorrecta','Autenticacion ssh dispositivo OpenWRT',1);
