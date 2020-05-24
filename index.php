@@ -9,12 +9,14 @@
           <?php if(!isset($_SESSION)) : session_start(); endif; ?>
           <?php if(isset($_SESSION['user'])) : header('Location: view'); endif; ?>
 
-          <form class="c-form login-form">
+          <form class="c-form login-form" id="login_form" action="">
                <fieldset class="c-form__fieldset">
                     <legend class="c-form__title">
                          <span>Identifíquese</span>
                          <br />
                          <span id="datetime"></span>
+                         <br />
+                         <span id="response"></span>
                     </legend>
 
                     <div class="u-spacer--sm"></div>
@@ -36,11 +38,11 @@
                     <div class="u-spacer--sm"></div>
 
                     <a class="c-form__link" id="forgot_btn" href="#">Solicitar acceso</a>
-                    <button type="button" class="c-form__button u-ripple">Acceder</button>
+                    <button type="submit" class="c-form__button u-ripple" id="send_login">Acceder</button>
                </fieldset>
           </form>
 
-          <form class="c-form forgot-form">
+          <form class="c-form forgot-form" id="forgot_form" action="">
                <fieldset class="c-form__fieldset">
                     <legend class="c-form__title">
                          <span>Solicitud de acceso</span>
@@ -67,7 +69,7 @@
                     <div class="u-spacer--sm"></div>
 
                     <a class="c-form__link" id="access_btn" href="#">Acceder</a>
-                    <button type="button" class="c-form__button u-ripple">Enviar solicitud</button>
+                    <button type="submit" class="c-form__button u-ripple" id="send_forgot">Enviar solicitud</button>
                </fieldset>
           </form>
 
@@ -82,6 +84,7 @@
                     <path d="M357 191c-5-6-11-8-19-8h-9v-55c0-35-13-65-38-90S236 0 201 0s-65 13-90 38-38 55-38 90v55h-9c-8 0-14 2-19 8-6 5-8 12-8 19v165c0 7 2 14 8 19 5 5 11 8 19 8h274c8 0 14-3 19-8 6-5 8-12 8-19V210c0-7-2-14-8-19zm-83-8H128v-55c0-20 7-37 21-52 15-14 32-21 52-21s37 7 52 21c14 15 21 32 21 52v55z" />
                </symbol>
           </svg>
+          <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
           <script type="text/javascript" src="code/js/index_time.js"></script>
           <script type="text/javascript" src="code/js/index.js"></script>
      </body>

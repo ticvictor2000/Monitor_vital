@@ -33,21 +33,6 @@ function newLog($msg,$type,$warn) {
      return true;
 }
 
-function loginError($error,$errord = 'a',$warn = 1) {
-     if ($errord == 'a') {
-          $errord = $error;
-     }
-     if (!isset($_SESSION)) {
-          session_start();
-     }
-     $_SESSION['errors']['login'] = $error;
-     if (newLog($errord,'Login Error',$warn)) {
-          header('Location: ../../');
-     } else {
-          return false;
-     }
-}
-
 function auth($elevation) {
      if (!isset($_SESSION)) {
           session_start();
@@ -91,6 +76,21 @@ function searchMacDb($id, $array) {
        }
    }
    return false;
+}
+
+function geterrs() {
+     $logs = json_decode(file_get_contents(dirname(__DIR__,2) . '/code/json/log.json'),true)['Logs'];
+     $logs_return = array();
+     $logs_return_i = 0;
+     foreach ($logs as $log) {
+          if ($log['GRAVEDAD']==1) {
+               if (!is_array($log['MENSAJE'])) {
+                    $logs_return[$logs_return_i] = $log;
+                    $logs_return_i++;
+               }
+          }
+     }
+     return $logs_return;
 }
 
 
