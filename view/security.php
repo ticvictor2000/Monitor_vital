@@ -25,7 +25,7 @@
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+    <div class="sidebar" data-color="<?= $db->getColor($pdo,$_SESSION['user']['ID']); ?>" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
@@ -56,19 +56,19 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="./ports.php">
-              <i class="material-icons">library_books</i>
+              <i class="material-icons">settings_input_component</i>
               <p>Puertos</p>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="./netdevices.php">
-              <i class="material-icons">bubble_chart</i>
+              <i class="material-icons">router</i>
               <p>Dispositivos de red</p>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="./telegram.php">
-              <i class="material-icons">location_ons</i>
+              <i class="material-icons">send</i>
               <p>Telegram</p>
             </a>
           </li>

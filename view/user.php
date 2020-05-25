@@ -2,6 +2,7 @@
 <?php require_once '../code/php/helpers.php'; ?>
 <?php require_once '../code/php/classes.php'; ?>
 <?php $db = new Db();  ?>
+<?php $pdo = $db->connect(); ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -26,7 +27,7 @@
 <body class="">
 
   <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+    <div class="sidebar" data-color="<?= $db->getColor($pdo,$_SESSION['user']['ID']); ?>" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
@@ -57,19 +58,19 @@
              </li>
              <li class="nav-item ">
                <a class="nav-link" href="./ports.php">
-                 <i class="material-icons">library_books</i>
+                 <i class="material-icons">settings_input_component</i>
                  <p>Puertos</p>
                </a>
              </li>
              <li class="nav-item ">
                <a class="nav-link" href="./netdevices.php">
-                 <i class="material-icons">bubble_chart</i>
+                 <i class="material-icons">router</i>
                  <p>Dispositivos de red</p>
                </a>
              </li>
              <li class="nav-item ">
                <a class="nav-link" href="./telegram.php">
-                 <i class="material-icons">location_ons</i>
+                 <i class="material-icons">send</i>
                  <p>Telegram</p>
                </a>
              </li>
@@ -154,59 +155,44 @@
                       <div class="col-md-3">
                         <div class="form-group">
                           <label class="bmd-label-floating">Usuario</label>
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" id="username" value="<?= $_SESSION['user']['USERNAME'] ?>">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Email address</label>
-                          <input type="email" class="form-control">
+                          <label class="bmd-label-floating">Correo electrónico</label>
+                          <input type="email" class="form-control" id="email" value="<?= $_SESSION['user']['EMAIL'] ?>">
                         </div>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Fist Name</label>
-                          <input type="text" class="form-control">
+                          <label class="bmd-label-floating">Nombre</label>
+                          <input type="text" class="form-control" id="name" value="<?= $_SESSION['user']['NAME'] ?>">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Last Name</label>
-                          <input type="text" class="form-control">
+                          <label class="bmd-label-floating">Apellidos</label>
+                          <input type="text" class="form-control" id="surname" value="<?= $_SESSION['user']['SURNAME'] ?>">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Nueva contraseña</label>
+                          <input type="text" class="form-control" id="npassword">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Confirmar nueva contraseña</label>
+                          <input type="text" class="form-control" id="npasswordc">
                         </div>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Adress</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
                     </div>
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">City</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Country</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Postal Code</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
+                    <button type="submit" class="btn btn-primary pull-right">Actualizar mis datos</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>

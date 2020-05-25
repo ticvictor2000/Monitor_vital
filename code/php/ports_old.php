@@ -39,8 +39,8 @@ if ($act == 'get_dev') {
      }
 
      // Return data to JS
-
-     echo json_encode($get_netdevices);
+     echo "string";
+     //echo json_encode($get_netdevices);
 }
 
 if ($act == 'get_ports') {
@@ -66,6 +66,7 @@ if ($act == 'get_ports') {
           }
           echo $html;
           die();
+     }
 }
 
 if ($act == 'req_locations') {
@@ -104,6 +105,10 @@ if ($act == 'upd_ports') {
           }
      }
 }
+
+
+
+
 
 
 ?>
