@@ -132,7 +132,7 @@
                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                      <a class="dropdown-item" href="user.php"><?= $_SESSION['user']['NAME'] ?></a>
                      <div class="dropdown-divider"></div>
-                     <a class="dropdown-item" id="logoff">Cerrar sesión</a>
+                     <a class="dropdown-item" id="logoff" href="../code/php/logoff.php">Cerrar sesión</a>
                    </div>
                  </li>
                </ul>
