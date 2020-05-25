@@ -3,7 +3,7 @@
         "auth_type": "DB"
     },
     "DB": {
-        "server_ip": "localhost",
+        "server_ip": "127.0.0.1",
         "username": "root",
         "password": "toor",
         "dbname": "Monitor_vital",

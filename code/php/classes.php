@@ -1,6 +1,5 @@
 <?php
 
-require_once dirname(__DIR__, 2) . '/libs/vendor/autoload.php';
 set_include_path(dirname(__DIR__, 2) . '/libs/ssh');
 require_once dirname(__DIR__, 2) . '/libs/ssh/Net/SSH2.php';
 

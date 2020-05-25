@@ -1,3 +1,5 @@
+<?php if(!isset($_SESSION)) : session_start(); endif; ?>
+<?php if(isset($_SESSION['user'])) : header('Location: view'); endif; ?>
 <!DOCTYPE html>
 <html lang="es" dir="ltr">
      <head>
@@ -6,9 +8,6 @@
           <link rel="stylesheet" href="code/css/index.css" />
      </head>
      <body>
-          <?php if(!isset($_SESSION)) : session_start(); endif; ?>
-          <?php if(isset($_SESSION['user'])) : header('Location: view'); endif; ?>
-
           <form class="c-form login-form" id="login_form" action="">
                <fieldset class="c-form__fieldset">
                     <legend class="c-form__title">

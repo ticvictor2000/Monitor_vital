@@ -1,3 +1,7 @@
+<?php if(!isset($_SESSION)) : session_start(); endif; ?>
+<?php require_once '../code/php/helpers.php'; ?>
+<?php require_once '../code/php/classes.php'; ?>
+<?php $db = new Db();  ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -20,8 +24,7 @@
 </head>
 
 <body class="">
-     <?php if(!isset($_SESSION)) : session_start(); endif; ?>
-     <?php require_once '../code/php/helpers.php'; ?>
+
   <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
       <!--
@@ -102,20 +105,22 @@
                      </p>
                    </a>
                  </li>
-                 <li class="nav-item dropdown">
-                   <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                     <i class="material-icons">notifications</i>
-                     <span class="notification"><?= count(geterrs()) ?></span>
-                     <p class="d-lg-none d-md-block">
-                       Some Actions
-                     </p>
-                   </a>
-                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                        <?php foreach(geterrs() as $warn): ?>
-                             <a class="dropdown-item" href="#"><?= $warn['MENSAJE'] ?></a>
-                        <?php endforeach; ?>
-                   </div>
-                 </li>
+                 <?php if (count(geterrs())>1): ?>
+                   <li class="nav-item dropdown">
+                     <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                       <i class="material-icons">notifications</i>
+                       <span class="notification"><?= count(geterrs()) ?></span>
+                       <p class="d-lg-none d-md-block">
+                         Some Actions
+                       </p>
+                     </a>
+                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                          <?php foreach(geterrs() as $warn): ?>
+                               <a class="dropdown-item" href="#"><?= $warn['MENSAJE'] ?></a>
+                          <?php endforeach; ?>
+                     </div>
+                   </li>
+                <?php endif; ?>
                  <li class="nav-item dropdown">
                    <a class="nav-link" href="javascript:;" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                      <i class="material-icons">person</i>
