@@ -130,7 +130,7 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                   <a class="dropdown-item" href="user.php"><?= $_SESSION['user']['NAME'] ?></a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" id="logoff">Cerrar sesión</a>
+                  <a class="dropdown-item" id="logoff" href="../code/php/logoff.php">Cerrar sesión</a>
                 </div>
               </li>
               </li>
@@ -163,22 +163,7 @@
                     <th>Puerto</th>
                     <th>Ubicación</th>
                   </thead>
-                  <tbody>
-                      <form>
-                        <tr>
-                            <td>FastEthernet0/1</td>
-                            <td>
-                              <div class="row">
-                                <div class="col-md-3">
-                                  <div class="form-group">
-                                    <input type="text" class="form-control" id="ub1">
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-                        </tr>
-                      </form>
-                  </tbody>
+                  <tbody id="ports_form"></tbody>
                 </table>
               </div>
             </div>

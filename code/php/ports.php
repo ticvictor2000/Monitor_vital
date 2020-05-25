@@ -46,26 +46,16 @@ if ($act == 'get_dev') {
 if ($act == 'get_ports') {
      $mac = trim($_POST['mac']);
 
-          $ports_db = $db->getPorts($mac,$pdo);
+     $ports_db = $db->getPorts($mac,$pdo);
 
-          if (is_string($ports_db)) {
-               echo 'Hubo un error interno';
-               newLog($ports_db, 'Gestión de puertos, comprobar puertos en la DB',4);
-               die();
-          }
-
-          // Display ports
-          $html = '';
-          for ($i=0; $i < count($ports_db); $i++) {
-               $html .= '<tr>';
-                    $html .= '<td>' . $ports_db[$i]['NAME'] . '</td>';
-                    $html .= '<td>';
-                         $html .= '<input type="text" placeholder="Ubicación" pname="' . $ports_db[$i]['NAME'] . '" list="locations" value="' . $ports_db[$i]['LOCATION'] . '" />';
-                    $html .= '</td>';
-               $html .= '</tr>';
-          }
-          echo $html;
+     if (is_string($ports_db)) {
+          echo false;
+          newLog($ports_db, 'Gestión de puertos, comprobar puertos en la DB',4);
           die();
+     }
+
+     echo json_encode($ports_db);
+     die();
 }
 
 if ($act == 'req_locations') {
