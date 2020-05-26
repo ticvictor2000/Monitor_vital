@@ -142,32 +142,135 @@
       <!-- End Navbar -->
       <div class="content">
         <div class="container-fluid">
-          <div class="container-fluid">
-            <div class="card card-plain">
-              <div class="card-header card-header-primary">
-                <h4 class="card-title">Material Design Icons</h4>
-                <p class="card-category">Handcrafted by our friends from
-                  <a target="_blank" href="https://design.google.com/icons/">Google</a>
-                </p>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="card-body">
-                    <div class="iframe-container d-none d-lg-block">
-
-                    </div>
-                    <div class="col-md-12 d-none d-sm-block d-md-block d-lg-none d-block d-sm-none text-center ml-auto mr-auto">
-                      <h5>The icons are visible on Desktop mode inside an iframe. Since the iframe is not working on Mobile and Tablets please visit the icons on their original page on Google. Check the
-                        <a href="https://design.google.com/icons/" target="_blank">Material Icons</a>
-                      </h5>
-                    </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Dispositivos de red</h4>
+                  <p class="card-category">Listado</p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th>MAC</th>
+                        <th>TIPO</th>
+                        <th>MARCA</th>
+                        <th>MODELO</th>
+                        <th>NÚMERO DE PUERTOS</th>
+                        <th>SSH</th>
+                        <th>TELNET</th>
+                      </thead>
+                      <tbody>
+                        <?php foreach ($db->getNetDevices($pdo) as $netdev): ?>
+                            <tr>
+                              <td><?= $netdev['MACND'] ?></td>
+                              <td><?= $netdev['TUSERNAME'] ?></td>
+                              <td><?= $netdev['EMAIL'] ?></td>
+                              <td><?= $netdev['NAME'] ?></td>
+                              <td><?= $netdev['SURNAME'] ?></td>
+                              <td><?= $netdev['ROLE'] ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                      </tbody>
+                    </table>
                   </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Usuarios</h4>
+                  <p class="card-category">Crear un usuario</p>
+                </div>
+                <div class="card-body">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Nombre de usuario</label>
+                          <input type="text" class="form-control" id="username">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Correo electrónico</label>
+                          <input type="email" class="form-control" id="email">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Rol</label>
+                          <input type="text" class="form-control" id="role" list="roles">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Nombre</label>
+                          <input type="text" class="form-control" id="name">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Apellidos</label>
+                          <input type="text" class="form-control" id="surname">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Contraseña</label>
+                          <input type="password" class="form-control" id="password">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Confirmar contraseña</label>
+                          <input type="password" class="form-control" id="passwordc">
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary pull-right">Crear usuario</button>
+                    <div class="clearfix"></div>
+                  </form>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Usuarios</h4>
+                  <p class="card-category">Restablecer contraseña</p>
+                </div>
+                <div class="card-body">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Nombre de usuario</label>
+                          <input type="text" class="form-control" id="reset_username">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Contraseña</label>
+                          <input type="password" class="form-control" id="npassword">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Confirmar contraseña</label>
+                          <input type="password" class="form-control" id="npasswordc">
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary pull-right">Restablecer contraseña</button>
+                    <div class="clearfix"></div>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
       <footer class="footer">
         <div class="container-fluid">
           <nav class="float-left">
