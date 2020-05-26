@@ -25,6 +25,10 @@
                 "240789400",
                 "240789444"
             ]
+        },
+        "Files_dirs": {
+            "Docs": "https://archermil.ddns.net/Monitor_Vital/telegram/files/docs/",
+            "Images": "https://archermil.ddns.net/Monitor_Vital/telegram/files/imgs/"
         }
     }
 }

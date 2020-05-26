@@ -770,6 +770,27 @@ class Bot {
           file_get_contents($url);
      }
 
+     public function sendDocument($name, $chatId = 'F') {
+          if ($chatId == 'F') {
+               $chatId = $this->message_data['chat']['id'];
+          }
+          $root_path = json_decode(file_get_contents('../code/json/cnf.json'),true)['Telegram']['Files_dirs']['Docs'];
+          $path = $root_path . $name;
+          $url = $this->website . '/sendDocument?chat_id='.$chatId.'&document='.urlencode($path);
+          file_get_contents($url);
+     }
+
+     public function sendImage($name, $chatId = 'F') {
+          if ($chatId == 'F') {
+               $chatId = $this->message_data['chat']['id'];
+          }
+          $root_path = json_decode(file_get_contents('../code/json/cnf.json'),true)['Telegram']['Files_dirs']['Images'];
+          $path = $root_path . $name;
+          $url = $this->website . '/sendPhoto?chat_id='.$chatId.'&document='.urlencode($path);
+          $this->sendMessage($url);die();
+          file_get_contents($url);
+     }
+
      public function isAdmin() {
           if ($this->message_data['from']['id'] == $this->adminId) {
                return true;

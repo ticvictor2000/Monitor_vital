@@ -93,6 +93,13 @@ switch ($msg) {
                $bot->sendMessage('No conozco ese comando');
           }
           break;
+     case '/doc':
+          $bot->sendDocument('test.pdf');
+          break;
+
+     case '/img':
+          $bot->sendImage('t1.gif');
+          break;
 
      default:
           $bot->sendMessage('No conozco ese comando');
