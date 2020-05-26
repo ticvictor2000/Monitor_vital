@@ -165,11 +165,20 @@
                         <?php foreach ($db->getNetDevices($pdo) as $netdev): ?>
                             <tr>
                               <td><?= $netdev['MACND'] ?></td>
-                              <td><?= $netdev['TUSERNAME'] ?></td>
-                              <td><?= $netdev['EMAIL'] ?></td>
-                              <td><?= $netdev['NAME'] ?></td>
-                              <td><?= $netdev['SURNAME'] ?></td>
-                              <td><?= $netdev['ROLE'] ?></td>
+                              <td><?= $netdev['TYPE'] ?></td>
+                              <td><?= $netdev['BRAND'] ?></td>
+                              <td><?= $netdev['MODEL'] ?></td>
+                              <td><?= $netdev['NPORTS'] ?></td>
+                              <?php if($netdev['SSH']): ?>
+                                   <td>SÍ</td>
+                              <?php else: ?>
+                                   <td>NO</td>
+                              <?php endif; ?>
+                              <?php if($netdev['TELNET']): ?>
+                                   <td>SÍ</td>
+                              <?php else: ?>
+                                   <td>NO</td>
+                              <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
                       </tbody>
