@@ -148,9 +148,11 @@
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Editar perfil</h4>
                   <p class="card-category">Actualiza tu perfil</p>
+                  <p class="card-category error"></p>
+                  <!-- El chombo -->
                 </div>
                 <div class="card-body">
-                  <form>
+                  <form id="user_update">
                     <div class="row">
                       <div class="col-md-3">
                         <div class="form-group">
@@ -271,8 +273,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
   <!-- Library for adding dinamically elements -->
   <script src="../code/js/plugins/arrive.min.js"></script>
-  <!--  Google Maps Plugin    -->
-
+  <!--  Form    -->
+  <script src="../code/js/view_user.js"></script>
   <!-- Chartist JS -->
   <script src="../code/js/plugins/chartist.min.js"></script>
   <!--  Notifications Plugin    -->

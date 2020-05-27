@@ -1,101 +1,13 @@
 <?php
 
-/**
- * Pure-PHP implementation of SSHv2.
- *
- * PHP versions 4 and 5
- *
- * Here are some examples of how to use this library:
- * <code>
- * <?php
- *    include 'Net/SSH2.php';
- *
- *    $ssh = new Net_SSH2('www.domain.tld');
- *    if (!$ssh->login('username', 'password')) {
- *        exit('Login Failed');
- *    }
- *
- *    echo $ssh->exec('pwd');
- *    echo $ssh->exec('ls -la');
- * ?>
- * </code>
- *
- * <code>
- * <?php
- *    include 'Crypt/RSA.php';
- *    include 'Net/SSH2.php';
- *
- *    $key = new Crypt_RSA();
- *    //$key->setPassword('whatever');
- *    $key->loadKey(file_get_contents('privatekey'));
- *
- *    $ssh = new Net_SSH2('www.domain.tld');
- *    if (!$ssh->login('username', $key)) {
- *        exit('Login Failed');
- *    }
- *
- *    echo $ssh->read('username@username:~$');
- *    $ssh->write("ls -la\n");
- *    echo $ssh->read('username@username:~$');
- * ?>
- * </code>
- *
- * LICENSE: Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @category  Net
- * @package   Net_SSH2
- * @author    Jim Wigginton <terrafrost@php.net>
- * @copyright 2007 Jim Wigginton
- * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
- * @link      http://phpseclib.sourceforge.net
- */
-
-/**#@+
- * Execution Bitmap Masks
- *
- * @see self::bitmap
- * @access private
- */
 define('NET_SSH2_MASK_CONSTRUCTOR',   0x00000001);
 define('NET_SSH2_MASK_CONNECTED',     0x00000002);
 define('NET_SSH2_MASK_LOGIN_REQ',     0x00000004);
 define('NET_SSH2_MASK_LOGIN',         0x00000008);
 define('NET_SSH2_MASK_SHELL',         0x00000010);
 define('NET_SSH2_MASK_WINDOW_ADJUST', 0x00000020);
-/**#@-*/
 
-/**#@+
- * Channel constants
- *
- * RFC4254 refers not to client and server channels but rather to sender and recipient channels.  we don't refer
- * to them in that way because RFC4254 toggles the meaning. the client sends a SSH_MSG_CHANNEL_OPEN message with
- * a sender channel and the server sends a SSH_MSG_CHANNEL_OPEN_CONFIRMATION in response, with a sender and a
- * recepient channel.  at first glance, you might conclude that SSH_MSG_CHANNEL_OPEN_CONFIRMATION's sender channel
- * would be the same thing as SSH_MSG_CHANNEL_OPEN's sender channel, but it's not, per this snipet:
- *     The 'recipient channel' is the channel number given in the original
- *     open request, and 'sender channel' is the channel number allocated by
- *     the other side.
- *
- * @see self::_send_channel_packet()
- * @see self::_get_channel_packet()
- * @access private
- */
+
 define('NET_SSH2_CHANNEL_EXEC',      0); // PuTTy uses 0x100
 define('NET_SSH2_CHANNEL_SHELL',     1);
 define('NET_SSH2_CHANNEL_SUBSYSTEM', 2);
@@ -883,7 +795,7 @@ class Net_SSH2
      * @return Net_SSH2
      * @access public
      */
-    function Net_SSH2($host, $port = 22, $timeout = 10)
+    function __construct($host, $port = 22, $timeout = 10)
     {
         // Include Math_BigInteger
         // Used to do Diffie-Hellman key exchange and DSA/RSA signature verification.
