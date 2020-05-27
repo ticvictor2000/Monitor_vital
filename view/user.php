@@ -148,11 +148,11 @@
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Editar perfil</h4>
                   <p class="card-category">Actualiza tu perfil</p>
-                  <p class="card-category error"></p>
-                  <!-- El chombo -->
+                  <p id="resp_msg"></p>
+                  <img src="../assets/gif/loading.gif" height="50px" width="50px"></img>
                 </div>
                 <div class="card-body">
-                  <form id="user_update">
+                  <form id="user_update" action="">
                     <div class="row">
                       <div class="col-md-3">
                         <div class="form-group">
@@ -183,13 +183,13 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Nueva contraseña</label>
-                          <input type="text" class="form-control" id="npassword">
+                          <input type="password" class="form-control" id="npassword">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Confirmar nueva contraseña</label>
-                          <input type="text" class="form-control" id="npasswordc">
+                          <input type="password" class="form-control" id="npasswordc">
                         </div>
                       </div>
                     </div>

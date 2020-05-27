@@ -1,5 +1,5 @@
 var form = document.getElementById('user_update');
-var errors = document.getElementById('errors');
+var resp = document.getElementById('resp_msg');
 
 form.onsubmit = function(e) {
      var username = document.getElementById('username');
@@ -10,24 +10,36 @@ form.onsubmit = function(e) {
      var npasswordc = document.getElementById('npasswordc');
 
      if (npassword.value.trim() == '' && npasswordc.value.trim() == '') {
+          // Change only info
+          $.ajax({
+               type: 'POST',
+               url: '../code/php/update_user.php',
+               data: {
+                    act: 'upd_userdata'
+               },
+               beforeSend: function() {
+                    console.log('Loading user update');
+               },
+               success: function(data){
 
+               }
+          });
      } else {
-          errors.innerHTML = ''
+          // Change all fields
+          $.ajax({
+               type: 'POST',
+               url: '../code/php/update_user.php',
+               data: {
+                    act: 'upd_userdata_all'
+               },
+               beforeSend: function() {
+                    console.log('Loading user update');
+               },
+               success: function(data){
+                    
+               }
+          });
      }
-
-     $.ajax({
-          type: 'POST',
-          url: '../code/php/update_user.php',
-          data: {
-               act: 'upd_userdata'
-          },
-          beforeSend: function() {
-               console.log('Loading user update');
-          },
-          success: function(data){
-
-          }
-     });
 
      e.preventDefault();
 }
