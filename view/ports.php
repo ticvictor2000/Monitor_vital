@@ -145,9 +145,10 @@
             <div class="card-header card-header-primary">
               <h4 class="card-title">Puertos</h4>
               <p class="card-category">Establece ubicaciones físicas a cada puerto</p>
+              <span id="result"></span>
+              <img src="../assets/gif/loading.gif" height="50px" width="50px" id="loading"></img>
             </div>
             <div class="card-body">
-               <span class="error" id="error"></span>
               <select id="type" class="select_ports">
                   <option value="null" disabled selected>--Tipo de dispositivo de red--</option>
                   <option value="ap">AP (Punto de acceso inalámbrico)</option>
@@ -166,6 +167,7 @@
                   <tbody id="ports_form"></tbody>
                 </table>
               </div>
+              <button id="upd_ports_btn" type="button" class="btn btn-primary">Actualizar puertos</button>
             </div>
           </div>
         </div>

@@ -160,7 +160,9 @@
                         <th>Rol</th>
                       </thead>
                       <tbody>
-                        <?php foreach ($db->getUsers($pdo) as $user): ?>
+                        <?php $noAdmin = true; ?>
+                        <?php if($_SESSION['user']['ROLE'] == 'admin'): $noAdmin = false; endif; ?>
+                        <?php foreach ($db->getUsers($pdo,$noAdmin) as $user): ?>
                             <tr>
                               <td><?= $user['ID'] ?></td>
                               <td><?= $user['TUSERNAME'] ?></td>
@@ -179,9 +181,11 @@
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Usuarios</h4>
                   <p class="card-category">Crear un usuario</p>
+                  <p id="resp_msg"></p>
+                  <img src="../assets/gif/loading.gif" height="50px" width="50px" id="loading"></img>
                 </div>
                 <div class="card-body">
-                  <form>
+                  <form id="new_user" action="">
                     <div class="row">
                       <div class="col-md-3">
                         <div class="form-group">
@@ -215,13 +219,19 @@
                           <input type="text" class="form-control" id="surname">
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Usuario de telegram</label>
+                          <input type="text" class="form-control" id="tusername">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Contraseña</label>
                           <input type="password" class="form-control" id="password">
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Confirmar contraseña</label>
                           <input type="password" class="form-control" id="passwordc">
@@ -238,9 +248,11 @@
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Usuarios</h4>
                   <p class="card-category">Restablecer contraseña</p>
+                  <p id="resp_msg_2"></p>
+                  <img src="../assets/gif/loading.gif" height="50px" width="50px" id="loading_2"></img>
                 </div>
                 <div class="card-body">
-                  <form>
+                  <form id="reset_passwd" action="">
                     <div class="row">
                       <div class="col-md-3">
                         <div class="form-group">
@@ -310,8 +322,11 @@
   </div>
 
   <datalist id="roles">
-      <option value="admin">
+      <?php if ($_SESSION['user']['ROLE'] == 'admin'): ?>
+           <option value="admin">
+      <?php endif; ?>
       <option value="tech">
+      <option value="medical">
   </datalist>
   <!--   Core JS Files   -->
   <script src="../code/js/core/jquery.min.js"></script>
@@ -346,8 +361,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
   <!-- Library for adding dinamically elements -->
   <script src="../code/js/plugins/arrive.min.js"></script>
-  <!--  Google Maps Plugin    -->
-
+  <!--  Forms   -->
+  <script src="../code/js/view_users.js"></script>
   <!-- Chartist JS -->
   <script src="../code/js/plugins/chartist.min.js"></script>
   <!--  Notifications Plugin    -->

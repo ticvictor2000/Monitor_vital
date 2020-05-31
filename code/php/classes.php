@@ -31,11 +31,19 @@ class Db {
           }
      }
 
-     public function getUsers($pdo) {
-          try {
-               $users = $pdo->query("SELECT * FROM Users")->fetchAll(PDO::FETCH_ASSOC);
-          } catch (PDOException $e) {
-               return false;
+     public function getUsers($pdo,$noAdmin = false) {
+          if (!$noAdmin) {
+               try {
+                    $users = $pdo->query("SELECT * FROM Users")->fetchAll(PDO::FETCH_ASSOC);
+               } catch (PDOException $e) {
+                    return false;
+               }
+          } else {
+               try {
+                    $users = $pdo->query("SELECT * FROM Users WHERE ROLE NOT LIKE 'admin'")->fetchAll(PDO::FETCH_ASSOC);
+               } catch (PDOException $e) {
+                    return false;
+               }
           }
           return $users;
      }
@@ -261,6 +269,65 @@ class Db {
      public function newPort($pdo,$name,$macnd) {
           try {
                $new_port = $pdo->query("INSERT INTO Ports VALUES (null,'$name',null,null,'$macnd',null)");
+          } catch (PDOException $e) {
+               return $e;
+          }
+          return true;
+     }
+
+     public function updUserField($pdo,$field,$value,$id,$unique = true) {
+          // Check if username exists
+          if ($unique) {
+               try {
+                    $check_free = $pdo->query("SELECT $field FROM Users WHERE $field='$value'")->fetchAll(PDO::FETCH_ASSOC);
+               } catch (PDOException $e) {
+                    return $e;
+               }
+               if (count($check_free)>0) {
+                    return false;
+               }
+          }
+
+          try {
+               $upd_value = $pdo->query("UPDATE Users SET $field='$value' WHERE ID=$id");
+          } catch (PDOException $e) {
+               return $e;
+          }
+          return true;
+     }
+
+     public function regUser($pdo,$data) {
+          $name = $data['name'];
+          $surname = $data['surname'];
+          $username = $data['user'];
+          $email = $data['email'];
+          $tusername = $data['tuser'];
+          $pass = $data['pass'];
+          $role = $data['role'];
+
+          try {
+               $reg_user_sql = "INSERT INTO Users (ID,NAME,SURNAME,USERNAME,EMAIL,TUSERNAME,PASS,ROLE,COLOR) ";
+               $reg_user_sql .= "VALUES (null,'$name','$surname','$username','$email','$tusername','$pass','$role','purple')";
+               $reg_user = $pdo->query($reg_user_sql);
+          } catch (PDOException $e) {
+               return $e;
+          }
+
+          return true;
+     }
+
+     public function getRole($pdo,$user) {
+          try {
+               $user_role_c = $pdo->query("SELECT ROLE FROM Users WHERE USERNAME='$user'")->fetchAll(PDO::FETCH_ASSOC);
+          } catch (PDOException $e) {
+               return $e;
+          }
+          return $user_role_c[0]['ROLE'];
+     }
+
+     public function updPass($pdo,$user,$npass_safe) {
+          try {
+               $update_pass = $pdo->query("UPDATE Users SET PASS='$npass_safe' WHERE USERNAME='$user'");
           } catch (PDOException $e) {
                return $e;
           }

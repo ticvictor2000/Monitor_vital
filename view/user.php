@@ -149,7 +149,7 @@
                   <h4 class="card-title">Editar perfil</h4>
                   <p class="card-category">Actualiza tu perfil</p>
                   <p id="resp_msg"></p>
-                  <img src="../assets/gif/loading.gif" height="50px" width="50px"></img>
+                  <img src="../assets/gif/loading.gif" height="50px" width="50px" id="loading"></img>
                 </div>
                 <div class="card-body">
                   <form id="user_update" action="">

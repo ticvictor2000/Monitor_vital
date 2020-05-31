@@ -1,13 +1,18 @@
 var type = document.getElementById('type');
 var netdevices = document.getElementById('netdevices');
 var ports = document.getElementById('ports');
-var error = document.getElementById('error');
+var resp = document.getElementById('result');
 var ports_form = document.getElementById('ports_form');
+var loading = document.getElementById('loading');
+var upd_ports_btn = document.getElementById('upd_ports_btn');
 
 netdevices.style.display = 'none';
+loading.style.display = 'none';
 ports.style.display = 'none';
+upd_ports_btn.style.display = 'none';
 
 type.onchange = function() {
+     upd_ports_btn.style.display = 'none';
      if (type.value != 'null') {
           // Reset values of netdevices
           netdevices.value = 'null';
@@ -22,13 +27,30 @@ type.onchange = function() {
                     type: type.value
                },
                beforeSend: function() {
-                    console.log('Loading Net_devices');
+                    loading.style.display = 'block';
                },
                success: function(data){
-                    if (data == false) {
-                         error.innerHTML = 'Hubo un error interno';
-                    } else {
-                         error.innerHTML = '';
+                    loading.style.display = 'none';
+
+                    if (typeof data != 'string') {
+                         resp.className = 'error';
+                         resp.innerHTML = 'Error interno al actualizar el usuario';
+                    }
+
+                    if (data.substr(0,1) == '*') {
+                         resp.className = 'error';
+                         resp.innerHTML = data.substr(1,(data.length - 1));
+                    }
+
+                    if (data.substr(0,1) == '-') {
+                         resp.className = 'warn';
+                         resp.innerHTML = data.substr(1,(data.length - 1));
+                    }
+
+                    if (data.substr(0,1) != '*' && data.substr(0,1) != '-') {
+                         resp.className = 'ok';
+                         resp.innerHTML = '';
+
                          for (var i = 0; i < netdevices.getElementsByTagName('option').length; i++) {
                               if (i != 0) {
                                    netdevices.removeChild(netdevices.getElementsByTagName('option')[i]);
@@ -59,13 +81,30 @@ netdevices.onchange = function() {
                     mac: netdevices.value
                },
                beforeSend: function() {
-                    console.log('Loading ports');
+                    loading.style.display = 'block';
                },
                success: function(data){
-                    if (data == false) {
-                         error.innerHTML = 'Hubo un error interno';
-                    } else {
-                         error.innerHTML = '';
+                    loading.style.display = 'none';
+
+                    if (typeof data != 'string') {
+                         resp.className = 'error';
+                         resp.innerHTML = 'Error interno al actualizar el usuario';
+                    }
+
+                    if (data.substr(0,1) == '*') {
+                         resp.className = 'error';
+                         resp.innerHTML = data.substr(1,(data.length - 1));
+                    }
+
+                    if (data.substr(0,1) == '-') {
+                         resp.className = 'warn';
+                         resp.innerHTML = data.substr(1,(data.length - 1));
+                    }
+
+                    if (data.substr(0,1) != '*' && data.substr(0,1) != '-') {
+                         resp.className = 'ok';
+                         resp.innerHTML = '';
+
                          var arr = JSON.parse(data);
                          // Remove older rows
                          ports_form.innerHTML = '';
@@ -91,11 +130,15 @@ netdevices.onchange = function() {
                               input.value = arr[i]['LOCATION'];
                               td_input.appendChild(input);
                               tr.appendChild(td_input);
-                              console.log(arr);
                               ports_form.appendChild(tr);
+                              upd_ports_btn.style.display = 'block';
                          }
                     }
                }
           });
      }
+}
+
+upd_ports_btn.onclick = function() {
+     
 }

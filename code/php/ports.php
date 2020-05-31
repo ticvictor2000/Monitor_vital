@@ -23,7 +23,7 @@ if ($act == 'get_dev') {
 
      // Verify type
      if ($type != 'switch' && $type != 'ap') {
-          echo 'Debes seleccionar un tipo válido';
+          echo '*Debes seleccionar un tipo válido';
           newLog($_SESSION['user']['NAME'] . ' ha intentado cambiar el tipo en el select en el formulario de gestión de puertos', 'Alerta de seguridad',3);
           die();
      }
@@ -33,7 +33,7 @@ if ($act == 'get_dev') {
      try {
           $get_netdevices = $pdo->query("SELECT MACND,BRAND,MODEL FROM Net_devices WHERE TYPE='$type'")->fetchAll(PDO::FETCH_ASSOC);
      } catch (PDOException $e) {
-          echo 'Error al buscar los dispositivos de red';
+          echo '*Error al buscar los dispositivos de red';
           newLog($e, 'Formulario gestión de puertos',4);
           die();
      }
@@ -49,7 +49,7 @@ if ($act == 'get_ports') {
      $ports_db = $db->getPorts($mac,$pdo);
 
      if (is_string($ports_db)) {
-          echo false;
+          echo '*Error al listar los puertos del dispositivo';
           newLog($ports_db, 'Gestión de puertos, comprobar puertos en la DB',4);
           die();
      }
@@ -75,7 +75,7 @@ if ($act == 'upd_ports') {
      $ports_db = $db->getPorts($mac,$pdo);
 
      if (is_string($ports_db)) {
-          echo false;
+          echo '*Error al actualizar los puertos en la base de datos';
           newLog($ports_db, 'Gestión de puertos, actualizar puertos en la DB',4);
           die();
      }
