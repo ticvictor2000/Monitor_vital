@@ -69,30 +69,43 @@ if ($act == 'req_locations') {
 }
 
 if ($act == 'upd_ports') {
-     $ports_location = json_decode(trim($_POST['pl']),true);
-     $mac = trim($_POST['mac']);
+     $ports_location = json_decode(trim($_POST['json']),true);
+     $mac = json_decode(trim($_POST['json']),true)[0][0];
 
      $ports_db = $db->getPorts($mac,$pdo);
-
      if (is_string($ports_db)) {
           echo '*Error al actualizar los puertos en la base de datos';
           newLog($ports_db, 'Gestión de puertos, actualizar puertos en la DB',4);
           die();
      }
 
-     for ($i=0; $i < count($ports_db); $i++) {
-          if ($ports_db[$i]['LOCATION'] != $ports_location[$i][0]) {
-               $update_loc = $db->updatePorts($pdo,$ports_location[$i][0],$ports_location[$i][1],$mac);
 
-               if (is_string($update_loc)) {
-                    echo false;
-                    newLog($update_loc,'Gestión de puertos, actualizar ubicaciones');
-                    die();
+     if ($_POST['ap']) {
+          if ($ports_db[0]['LOCATION'] != $ports_location[0][2]) {
+               for ($i=0; $i < count($ports_db); $i++) {
+                    $update_loc = $db->updatePortsAp($pdo,$ports_location[0][2],$mac);
+
+                    if (is_string($update_loc)) {
+                         echo '*Error interno. Contacte con el administrador';
+                         newLog($update_loc,'Gestión de puertos, actualizar ubicaciones');
+                         die();
+                    }
                }
+          }
+     } else {
+          for ($i=0; $i < count($ports_db); $i++) {
+               if ($ports_db[$i]['LOCATION'] != $ports_location[$i][2]) {
+                    $update_loc = $db->updatePorts($pdo,$ports_location[$i][2],$ports_location[$i][1],$mac);
 
-               echo true;
+                    if (is_string($update_loc)) {
+                         echo '*Error interno. Contacte con el administrador';
+                         newLog($update_loc,'Gestión de puertos, actualizar ubicaciones');
+                         die();
+                    }
+               }
           }
      }
+     echo 'Ubicaciones atualizadas correctamente';
 }
 
 

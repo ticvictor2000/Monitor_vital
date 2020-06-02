@@ -104,6 +104,15 @@ class Db {
           return true;
      }
 
+     public function updatePortsAp($pdo,$newloc,$mac) {
+          try {
+               $upd_location = $pdo->query("UPDATE Ports SET LOCATION='$newloc' WHERE MACND='$mac'");
+          } catch (PDOException $e) {
+               return $e;
+          }
+          return true;
+     }
+
      public function getClients($pdo) {
           try {
                $clients_db = $pdo->query("SELECT MACEQ FROM Medical_eq")->fetchAll(PDO::FETCH_ASSOC);
