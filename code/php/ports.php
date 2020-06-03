@@ -78,9 +78,10 @@ if ($act == 'upd_ports') {
           newLog($ports_db, 'Gestión de puertos, actualizar puertos en la DB',4);
           die();
      }
+     $isAp = boolval(trim($_POST['ap']));
 
-
-     if ($_POST['ap']) {
+     if ($isAp == true) {
+          die();
           if ($ports_db[0]['LOCATION'] != $ports_location[0][2]) {
                for ($i=0; $i < count($ports_db); $i++) {
                     $update_loc = $db->updatePortsAp($pdo,$ports_location[0][2],$mac);
@@ -93,6 +94,8 @@ if ($act == 'upd_ports') {
                }
           }
      } else {
+          echo "string";
+          die();
           for ($i=0; $i < count($ports_db); $i++) {
                if ($ports_db[$i]['LOCATION'] != $ports_location[$i][2]) {
                     $update_loc = $db->updatePorts($pdo,$ports_location[$i][2],$ports_location[$i][1],$mac);

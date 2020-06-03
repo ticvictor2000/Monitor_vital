@@ -214,6 +214,10 @@ upd_ports_btn.onclick = function() {
           ports_arr_clean[i] = [netdevices.value, ports_arr[i].id, ports_arr[i].value];
      }
      var ports_json = JSON.stringify(ports_arr_clean);
+     var ap = false;
+     if (type == 'ap') {
+          ap = true;
+     }
 
      $.ajax({
           type: 'POST',
@@ -221,7 +225,7 @@ upd_ports_btn.onclick = function() {
           data: {
                act: 'upd_ports',
                json: ports_json,
-               ap: true
+               ap: ap
           },
           beforeSend: function() {
                loading.style.display = 'block';
