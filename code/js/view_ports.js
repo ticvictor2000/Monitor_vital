@@ -5,6 +5,7 @@ var resp = document.getElementById('result');
 var ports_form = document.getElementById('ports_form');
 var loading = document.getElementById('loading');
 var upd_ports_btn = document.getElementById('upd_ports_btn');
+var locations = document.getElementById('locations');
 
 netdevices.style.display = 'none';
 loading.style.display = 'none';
@@ -129,11 +130,13 @@ netdevices.onchange = function() {
                                    input.type = 'text';
                                    input.className = 'form-control';
                                    input.id = 'unique';
+                                   input.setAttribute('list','locations');
                                    input.value = arr[0]['LOCATION'];
                                    td_input.appendChild(input);
                                    tr.appendChild(td_input);
                                    ports_form.appendChild(tr);
                                    upd_ports_btn.style.display = 'block';
+                                   locations.onclick();
                               }
                          }
                     }
@@ -195,10 +198,12 @@ netdevices.onchange = function() {
                                    input.className = 'form-control';
                                    input.id = arr[i]['NAME'];
                                    input.value = arr[i]['LOCATION'];
+                                   input.setAttribute('list','locations');
                                    td_input.appendChild(input);
                                    tr.appendChild(td_input);
                                    ports_form.appendChild(tr);
                                    upd_ports_btn.style.display = 'block';
+                                   locations.onclick();
                               }
                          }
                     }
@@ -214,10 +219,6 @@ upd_ports_btn.onclick = function() {
           ports_arr_clean[i] = [netdevices.value, ports_arr[i].id, ports_arr[i].value];
      }
      var ports_json = JSON.stringify(ports_arr_clean);
-     var ap = false;
-     if (type == 'ap') {
-          ap = true;
-     }
 
      $.ajax({
           type: 'POST',
@@ -225,7 +226,7 @@ upd_ports_btn.onclick = function() {
           data: {
                act: 'upd_ports',
                json: ports_json,
-               ap: ap
+               type: type.value
           },
           beforeSend: function() {
                loading.style.display = 'block';
@@ -251,8 +252,55 @@ upd_ports_btn.onclick = function() {
                if (data.substr(0,1) != '*' && data.substr(0,1) != '-') {
                     resp.className = 'ok';
                     resp.innerHTML = data;
+                    netdevices.value = 'null';
                     ports.style.display = 'none';
                     upd_ports_btn.style.display = 'none';
+               }
+          }
+     });
+}
+
+locations.onclick = function() {
+     $.ajax({
+          type: 'POST',
+          url: '../code/php/ports.php',
+          data: {
+               act: 'req_locations'
+          },
+          beforeSend: function() {
+               var option = locations.lastElementChild;
+               while (option) {
+                    locations.removeChild(option);
+                    option = locations.lastElementChild;
+               }
+          },
+          success: function(data){
+               var lcts = JSON.parse(data);
+               for (var i = 0; i < lcts.length; i++) {
+                    if (lcts[i]['LOCATION'] != null) {
+                         var options = locations.getElementsByTagName['option'];
+                         var location = document.createElement('option');
+                         location.value = lcts[i]['LOCATION'];
+                         locations.appendChild(location);
+                    }
+               }
+               var loc_arr = [];
+               for (var i = 0; i < locations.childElementCount; i++) {
+                    loc_arr.push(locations.getElementsByTagName('option')[i].value);
+               }
+               var unique_loc = [];
+               $.each(loc_arr, function(i, el){
+                    if($.inArray(el, unique_loc) === -1) unique_loc.push(el);
+               });
+               var option = locations.lastElementChild;
+               while (option) {
+                    locations.removeChild(option);
+                    option = locations.lastElementChild;
+               }
+               for (var i = 0; i < unique_loc.length; i++) {
+                    var option = document.createElement('option');
+                    option.value = unique_loc[i];
+                    locations.appendChild(option);
                }
           }
      });

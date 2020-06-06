@@ -209,6 +209,7 @@
       </footer>
     </div>
   </div>
+  <datalist id="locations"></datalist>
   <!--   Core JS Files   -->
   <script src="../code/js/core/jquery.min.js"></script>
   <script src="../code/js/core/popper.min.js"></script>
