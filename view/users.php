@@ -247,6 +247,90 @@
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Usuarios</h4>
+                  <p class="card-category">Editar un usuario</p>
+                  <p id="resp_msg_edit"></p>
+                  <img src="../assets/gif/loading.gif" height="50px" width="50px" id="loading_edit"></img>
+                </div>
+                <div class="card-body">
+                  <form id="edit_user" action="">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Nombre de usuario</label>
+                          <input type="text" class="form-control" id="eusername">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Correo electrónico</label>
+                          <input type="email" class="form-control" id="eemail">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Rol</label>
+                          <input type="text" class="form-control" id="erole" list="roles">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Nombre</label>
+                          <input type="text" class="form-control" id="ename">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Apellidos</label>
+                          <input type="text" class="form-control" id="esurname">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Usuario de telegram</label>
+                          <input type="text" class="form-control" id="etusername">
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary pull-right">Editar usuario</button>
+                    <div class="clearfix"></div>
+                  </form>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Usuarios</h4>
+                  <p class="card-category">Eliminar un usuario</p>
+                  <p id="resp_msg_del"></p>
+                  <img src="../assets/gif/loading.gif" height="50px" width="50px" id="loading_del"></img>
+                </div>
+                <div class="card-body">
+                  <form id="del_user" action="">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Nombre de usuario</label>
+                          <input type="text" class="form-control" id="dusername">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Confirmar nombre de usuario</label>
+                          <input type="text" class="form-control" id="dusernamec">
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary pull-right">Borrar usuario</button>
+                    <div class="clearfix"></div>
+                  </form>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Usuarios</h4>
                   <p class="card-category">Restablecer contraseña</p>
                   <p id="resp_msg_2"></p>
                   <img src="../assets/gif/loading.gif" height="50px" width="50px" id="loading_2"></img>

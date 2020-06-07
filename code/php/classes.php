@@ -325,6 +325,15 @@ class Db {
           return true;
      }
 
+     public function delUser($pdo,$username) {
+          try {
+               $del_user = $pdo->query("DELETE FROM Users WHERE USERNAME='$username'");
+          } catch (PDOException $e) {
+               return $e;
+          }
+          return true;
+     }
+
      public function getRole($pdo,$user) {
           try {
                $user_role_c = $pdo->query("SELECT ROLE FROM Users WHERE USERNAME='$user'")->fetchAll(PDO::FETCH_ASSOC);

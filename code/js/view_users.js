@@ -6,9 +6,19 @@ var form2 = document.getElementById('reset_passwd');
 var resp2 = document.getElementById('resp_msg_2');
 var loading2 = document.getElementById('loading_2');
 
+var form_del = document.getElementById('del_user');
+var resp_msg_del = document.getElementById('resp_msg_del');
+var loading_del = document.getElementById('loading_del');
+
+var form_edit = document.getElementById('edit_user');
+var resp_msg_edit = document.getElementById('resp_msg_edit');
+var loading_edit = document.getElementById('loading_edit');
+
 
 loading.style.display = 'none';
 loading2.style.display = 'none';
+loading_del.style.display = 'none';
+loading_edit.style.display = 'none'
 
 form.onsubmit = function(e) {
      var username = document.getElementById('username');
@@ -106,4 +116,58 @@ form2.onsubmit = function(e) {
      });
 
      e.preventDefault();
+}
+
+form_del.onsubmit = function(e) {
+     var dusername = document.getElementById('dusername');
+     var dusernamec = document.getElementById('dusernamec');
+
+     var sure = confirm('¿Está seguro que quiere eliminar al usuario '+dusername.value+"? \nEsta acción es irreversible");
+
+     if (sure == true) {
+          $.ajax({
+               type: 'POST',
+               url: '../code/php/del_user.php',
+               data: {
+                    dusername: dusername.value,
+                    dusernamec: dusernamec.value
+               },
+               beforeSend: function() {
+                    loading_del.style.display = 'block';
+               },
+               success: function(data) {
+                    loading_del.style.display = 'none';
+
+                    if (typeof data != 'string') {
+                         resp_msg_del.className = 'error';
+                         resp_msg_del.innerHTML = 'Error interno al crear el usuario';
+                    }
+
+                    if (data.substr(0,1) == '*') {
+                         resp_msg_del.className = 'error';
+                         resp_msg_del.innerHTML = data.substr(1,(data.length - 1));
+                    }
+
+                    if (data.substr(0,1) == '-') {
+                         resp_msg_del.className = 'warn';
+                         resp_msg_del.innerHTML = data.substr(1,(data.length - 1));
+                    }
+
+                    if (data.substr(0,1) != '*' && data.substr(0,1) != '-') {
+                         resp_msg_del.className = 'ok';
+                         resp_msg_del.innerHTML = data;
+                    }
+               }
+          });
+          e.preventDefault();
+     } else {
+          alert('Operación cancelada');
+          e.preventDefault();
+     }
+
+
+}
+
+form_edit.onsubmit = function(e) {
+     
 }
