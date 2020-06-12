@@ -48,15 +48,6 @@ class Db {
           return $users;
      }
 
-     public function getColor($pdo,$userid) {
-          try {
-               $color = $pdo->query("SELECT COLOR FROM Users WHERE ID='$userid'")->fetchAll(PDO::FETCH_ASSOC);
-          } catch (PDOException $e) {
-               return false;
-          }
-          return $color[0]['COLOR'];
-     }
-
      public function getNetDevices($pdo) {
           try {
                $netdev = $pdo->query("SELECT * FROM Net_devices")->fetchAll(PDO::FETCH_ASSOC);

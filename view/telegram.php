@@ -25,7 +25,7 @@
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="<?= $db->getColor($pdo,$_SESSION['user']['ID']); ?>" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+    <div class="sidebar" data-color="<?= getColor(); ?>" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 

@@ -93,6 +93,10 @@ function geterrs() {
      return $logs_return;
 }
 
+function getColor() {
+     return 'azure';
+}
+
 
 /* COMMANDS CISCO */
 /*
