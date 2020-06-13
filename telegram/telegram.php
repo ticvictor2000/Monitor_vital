@@ -21,6 +21,17 @@ if (is_string($pdo)) {
 $bot = new Bot();
 $msg = $bot->newMsg();
 
+// Obtain your ID
+
+if ($msg == '/start') {
+     if ($bot->get('chatType') == 'group') {
+          $bot->sendMessage("El número identificador de este grupo es: \n<b>" .$bot->get('chatId') . "</b>");
+     } else {
+          $bot->sendMessage("Tu número identificador es: \n<b>" . $bot->get('userId') . "</b>");
+     }
+     die();
+}
+
 // Permission checks
 
 if ($bot->get('chatType') == 'private') {
@@ -81,33 +92,39 @@ if ($bot->get('chatType') == 'private') {
      }
 }
 
-// Search processing
+// Search processing engine
 
 if (substr($msg,0,5) == 'busca') {
      $raw_command = substr($msg,5,strlen($msg));
      $arguments = explode('@',$raw_command);
-     $bot->sendMessage($arguments[1]);
-     $bot->sendMessage($arguments[2]);
-     $bot->sendMessage($arguments[3]);
-     die();
 
      if (isset($arguments[3])) {
           // Filter by type,brand and model
           $arr = $db->search($pdo,$arguments[1],$arguments[2],$arguments[3]);
      }
 
+     if (!isset($arguments[3]) && isset($arguments[2])) {
+          // Filter by type and brand
+          $arr = $db->search($pdo,$arguments[1],$arguments[2]);
+     }
+
+     if (!isset($arguments[2])) {
+          // Filter by type
+          $arr = $db->search($pdo,$arguments[1]);
+     }
+
      if (!is_array($arr)) {
           $bot->sendMessage('Hubo un error interno, contacte con el Administrador');
-          newLog($types,'Error en el comando buscar',4);
-          break;
+          newLog($arr,'Error en el comando buscar',4);
+          die();
      }
      if (count($arr) == 0) {
           $bot->sendMessage('No se ha encontrado ningún dispositivo');
-          break;
+          die();
      }
      if (count($arr)>0) {
           $table = '<table border="1">';
-          $table .= `
+          $table .= '
                          <tr>
                               <td>TIPO</td>
                               <td>MARCA</td>
@@ -115,20 +132,23 @@ if (substr($msg,0,5) == 'busca') {
                               <td>UBICACIÓN</td>
                               <td>ACTUALIZADO</td>
                          </tr>
-          `;
+          ';
           foreach ($arr as $eq) {
                $table .= '<tr>';
-                    $table .= '<td>' . $eq[''] . '</td>';
+                    $table .= '<td>' . $eq['TYPE'] . '</td>';
+                    $table .= '<td>' . $eq['BRAND'] . '</td>';
+                    $table .= '<td>' . $eq['MODEL'] . '</td>';
+                    $table .= '<td>' . $eq['LOCATION'] . '</td>';
+                    $table .= '<td>' . $eq['LAST_SEEN'] . '</td>';
                $table .= '</tr>';
           }
           $table .= '</table>';
-
           $html2pdf->writeHTML($table);
-          $filename = date('Y_m_d_H_i_s');
+          $filename = 'Ubicaciones_' . date('YmdHis');
           $pdf_raw  = $html2pdf->output($filename, 'S');
           $pdf_path = __DIR__ . '/files/docs/'.$filename.'.pdf';
           file_put_contents($pdf_path,$pdf_raw);
-          $bot->sendDocument($pdf_path);
+          $bot->sendDocument($filename.'.pdf');
      }
      die();
 }
@@ -160,19 +180,29 @@ switch ($msg) {
           break;
 
      // Admin commands
-     case '/debug':
+     case 'log':
           if ($admin) {
-               $bot->sendMessage(date('Y-m-d H:i:s'));
+               $html2pdf->writeHTML(getLog());
+               $filename = 'Logs_' . date('YmdHis');
+               $pdf_raw  = $html2pdf->output($filename, 'S');
+               $pdf_path = __DIR__ . '/files/docs/'.$filename.'.pdf';
+               file_put_contents($pdf_path,$pdf_raw);
+               $bot->sendDocument($filename . '.pdf');
           } else {
                $bot->sendMessage('No conozco ese comando');
           }
           break;
-     case '/doc':
-          $bot->sendDocument('test.pdf');
-          break;
-
-     case '/img':
-          $bot->sendImage('t2.jpeg');
+     case 'ubicaciones_equipamiento':
+          if ($admin) {
+               $html2pdf->writeHTML($db->getAllLocations($pdo));
+               $filename = 'Ubicaciones_' . date('YmdHis');
+               $pdf_raw  = $html2pdf->output($filename, 'S');
+               $pdf_path = __DIR__ . '/files/docs/'.$filename.'.pdf';
+               file_put_contents($pdf_path,$pdf_raw);
+               $bot->sendDocument($filename . '.pdf');
+          } else {
+               $bot->sendMessage('No conozco ese comando');
+          }
           break;
 
      // Default response

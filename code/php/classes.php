@@ -352,6 +352,68 @@ class Db {
           }
           return $types;
      }
+
+     public function search($pdo,$type,$brand=false,$model=false) {
+          $common_sql = "SELECT TYPE,BRAND,MODEL,Ports.LOCATION,LAST_SEEN FROM Medical_eq INNER JOIN Ports ON Medical_eq.MACEQ = Ports.MACEQ ";
+          if (!$brand && !$model) {
+               // Search by Type
+               try {
+                    $devices = $pdo->query($common_sql . "WHERE TYPE LIKE '%$type%'")->fetchAll(PDO::FETCH_ASSOC);
+               } catch (PDOException $e) {
+                    return $e;
+               }
+               return $devices;
+          }
+          if ($brand != false && !$model) {
+               // Search by Type and btand
+               try {
+                    $devices = $pdo->query($common_sql . "WHERE TYPE LIKE '%$type%' AND BRAND LIKE '%$brand%'")->fetchAll(PDO::FETCH_ASSOC);
+               } catch (PDOException $e) {
+                    return $e;
+               }
+               return $devices;
+          }
+          if ($model != false && $brand != false) {
+
+
+               // Search by type,brand and model
+               try {
+                    $devices = $pdo->query($common_sql . "WHERE TYPE LIKE '%$type%' AND BRAND LIKE '%$brand%' AND MODEL LIKE '%$model%'")->fetchAll(PDO::FETCH_ASSOC);
+               } catch (PDOException $e) {
+                    return $e;
+               }
+               return $devices;
+          }
+     }
+
+     public function getAllLocations($pdo) {
+          try {
+               $all_devices = $pdo->query("SELECT TYPE,BRAND,MODEL,Ports.LOCATION,LAST_SEEN FROM Medical_eq INNER JOIN Ports ON Medical_eq.MACEQ = Ports.MACEQ")->fetchAll(PDO::FETCH_ASSOC);
+          } catch (PDOException $e) {
+               return '<h1>Error en la consulta</h1><h2>' . "SELECT TYPE,BRAND,MODEL,Ports.LOCATION,LAST_SEEN FROM Medical_eq INNER JOIN Ports ON Medical_eq.MACEQ = Ports.MACEQ"  . '</h2>';
+          }
+          $table .= '<table border="1">';
+          $table .= '
+                         <tr>
+                              <td>TIPO</td>
+                              <td>MARCA</td>
+                              <td>MODELO</td>
+                              <td>UBICACIÓN</td>
+                              <td>ACTUALIZADO</td>
+                         </tr>
+          ';
+          foreach ($all_devices as $device) {
+               $table .= '<tr>';
+                    $table .= '<td>' . $device['TYPE'] . '</td>';
+                    $table .= '<td>' . $device['BRAND'] . '</td>';
+                    $table .= '<td>' . $device['MODEL'] . '</td>';
+                    $table .= '<td>' . $device['LOCATION'] . '</td>';
+                    $table .= '<td>' . $device['LAST_SEEN'] . '</td>';
+               $table .= '</tr>';
+          }
+          $table .= '</table>';
+          return $table;
+     }
 }
 
 class Telnet {

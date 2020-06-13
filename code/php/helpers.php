@@ -97,6 +97,37 @@ function getColor() {
      return 'azure';
 }
 
+function getLog() {
+     $logs = json_decode(file_get_contents(dirname(__DIR__,2) . '/code/json/log.json'),true)['Logs'];
+
+     $table = '<table border="1">';
+     $table .= '
+                    <tr>
+                         <td>FECHA</td>
+                         <td>HORA</td>
+                         <td>TIPO</td>
+                         <td>MENSAJE</td>
+                         <td>GRAVEDAD</td>
+                    </tr>
+     ';
+     foreach ($logs as $log) {
+          $table .= '<tr>';
+               $table .= '<td>' . $log['FECHA'] . '</td>';
+               $table .= '<td>' . $log['HORA'] . '</td>';
+               $table .= '<td>' . $log['TIPO'] . '</td>';
+               if (is_string($log['MENSAJE'])) {
+                    $table .= '<td>' . $log['MENSAJE'] . '</td>';
+               } else {
+                    $table .= '<td>' . 'Ver panel de seguridad' . '</td>';
+               }
+               $table .= '<td>' . $log['GRAVEDAD'] . '</td>';
+          $table .= '</tr>';
+     }
+     $table .= '</table>';
+     return $table;
+}
+
+
 
 /* COMMANDS CISCO */
 /*
