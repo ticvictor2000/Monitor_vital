@@ -5,6 +5,11 @@
 require_once '../code/php/classes.php';
 require_once '../code/php/helpers.php';
 
+// Html to Pdf
+
+use Spipu\Html2Pdf\Html2Pdf;
+$html2pdf = new Html2Pdf();
+
 // Connecting to the database
 
 $db = new Db();
@@ -17,7 +22,6 @@ $bot = new Bot();
 $msg = $bot->newMsg();
 
 // Permission checks
-
 
 if ($bot->get('chatType') == 'private') {
      // Prevent anyone to chat privatly with the bot
@@ -77,12 +81,82 @@ if ($bot->get('chatType') == 'private') {
      }
 }
 
-// Command processing
+// Search processing
+
+if (substr($msg,0,5) == 'busca') {
+     $raw_command = substr($msg,5,strlen($msg));
+     $arguments = explode('@',$raw_command);
+     $bot->sendMessage($arguments[1]);
+     $bot->sendMessage($arguments[2]);
+     $bot->sendMessage($arguments[3]);
+     die();
+
+     if (isset($arguments[3])) {
+          // Filter by type,brand and model
+          $arr = $db->search($pdo,$arguments[1],$arguments[2],$arguments[3]);
+     }
+
+     if (!is_array($arr)) {
+          $bot->sendMessage('Hubo un error interno, contacte con el Administrador');
+          newLog($types,'Error en el comando buscar',4);
+          break;
+     }
+     if (count($arr) == 0) {
+          $bot->sendMessage('No se ha encontrado ningún dispositivo');
+          break;
+     }
+     if (count($arr)>0) {
+          $table = '<table border="1">';
+          $table .= `
+                         <tr>
+                              <td>TIPO</td>
+                              <td>MARCA</td>
+                              <td>MODELO</td>
+                              <td>UBICACIÓN</td>
+                              <td>ACTUALIZADO</td>
+                         </tr>
+          `;
+          foreach ($arr as $eq) {
+               $table .= '<tr>';
+                    $table .= '<td>' . $eq[''] . '</td>';
+               $table .= '</tr>';
+          }
+          $table .= '</table>';
+
+          $html2pdf->writeHTML($table);
+          $filename = date('Y_m_d_H_i_s');
+          $pdf_raw  = $html2pdf->output($filename, 'S');
+          $pdf_path = __DIR__ . '/files/docs/'.$filename.'.pdf';
+          file_put_contents($pdf_path,$pdf_raw);
+          $bot->sendDocument($pdf_path);
+     }
+     die();
+}
+
+// Normal Command processing
 
 switch ($msg) {
      // Normal commands
-     case '/respiradores@MonitorVitalBot':
-          $bot->sendMessage('Lista de respiradores');
+     case 'equipos':
+          // Get types of equipment and create a table
+          $types = $db->getTypes($pdo);
+          if (!is_array($types)) {
+               $bot->sendMessage('Hubo un error interno, contacte con el Administrador');
+               newLog($types,'Error en el comando equipos',4);
+               break;
+          }
+          if (count($types) == 0) {
+               $bot->sendMessage('No existen tipos de equipamiento');
+               break;
+          }
+          if (count($types) > 0) {
+               $resp = "<b>Tipos de equipamiento:</b>\n";
+               foreach ($types as $type) {
+                    $resp .= $type['TYPE'] . "\n";
+               }
+          }
+
+          $bot->sendMessage($resp);
           break;
 
      // Admin commands
@@ -98,12 +172,14 @@ switch ($msg) {
           break;
 
      case '/img':
-          $bot->sendImage('t1.gif');
+          $bot->sendImage('t2.jpeg');
           break;
 
+     // Default response
      default:
           $bot->sendMessage('No conozco ese comando');
           break;
+
 }
 
 

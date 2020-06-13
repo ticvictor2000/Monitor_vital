@@ -2,6 +2,7 @@
 
 set_include_path(dirname(__DIR__, 2) . '/libs/ssh');
 require_once dirname(__DIR__, 2) . '/libs/ssh/Net/SSH2.php';
+require dirname(__DIR__, 2) . '/libs/vendor/autoload.php';
 
 class Db {
      private $server_ip;
@@ -341,6 +342,15 @@ class Db {
                return $e;
           }
           return true;
+     }
+
+     public function getTypes($pdo) {
+          try {
+               $types = $pdo->query("SELECT DISTINCT TYPE FROM Medical_eq")->fetchAll(PDO::FETCH_ASSOC);
+          } catch (PDOException $e) {
+               return $e;
+          }
+          return $types;
      }
 }
 
@@ -840,9 +850,12 @@ class Bot {
 
      public function sendMessage($response,$chatId = 'F') {
           if ($chatId == 'F') {
-               $chatId = $this->message_data['chat']['id'];
+               $chatId = $this->get('chatId');
           }
           $url = $this->website . '/sendMessage?chat_id='.$chatId.'&parse_mode=HTML&text='.urlencode($response);
+
+
+
           file_get_contents($url);
      }
 
@@ -862,8 +875,7 @@ class Bot {
           }
           $root_path = json_decode(file_get_contents('../code/json/cnf.json'),true)['Telegram']['Files_dirs']['Images'];
           $path = $root_path . $name;
-          $url = $this->website . '/sendPhoto?chat_id='.$chatId.'&document='.urlencode($path);
-          $this->sendMessage($url);die();
+          $url = $this->website . '/sendPhoto?chat_id='.$chatId.'&photo='.urlencode($path);
           file_get_contents($url);
      }
 
