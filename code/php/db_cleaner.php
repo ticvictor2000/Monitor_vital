@@ -51,10 +51,14 @@ foreach ($clients as $client) {
      }
 }
 
+// Remove temp files telegram
 
+array_map( 'unlink', array_filter((array) glob("../../telegram/files/docs/*") ) );
+array_map( 'unlink', array_filter((array) glob("../../telegram/files/imgs/*") ) );
 
+// Remove temp logs
 
-
+array_map( 'unlink', array_filter((array) glob("../json/dlogs/*") ) );
 
 
 
