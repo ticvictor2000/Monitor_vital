@@ -1,52 +1,262 @@
 {
     "Logs": {
-        "Log_14-06-20_01-21-54": {
+        "Log_14-06-20_01-32-35": {
             "FECHA": "14\/06\/20",
-            "HORA": "01:21:54",
-            "TIPO": "Password incorrect for user admin",
-            "MENSAJE": "Error en el login principal",
+            "HORA": "13:32:35",
+            "TIPO": "Evento de Seguridad del Bot de Telegram",
+            "MENSAJE": {
+                "TEXT": "Se ha intentado usar el bot con otro grupo no autorizado",
+                "DATA": {
+                    "message_id": 658,
+                    "from": {
+                        "id": 240789415,
+                        "is_bot": false,
+                        "first_name": "V",
+                        "last_name": "F",
+                        "username": "Victor_Martinez_2000",
+                        "language_code": "es"
+                    },
+                    "chat": {
+                        "id": -433422194,
+                        "title": "\u274cHospital Falso\u274c",
+                        "type": "group",
+                        "all_members_are_administrators": true
+                    },
+                    "date": 1592134354,
+                    "left_chat_participant": {
+                        "id": 1039832084,
+                        "is_bot": true,
+                        "first_name": "Monitor Vital",
+                        "username": "MonitorVitalBot"
+                    },
+                    "left_chat_member": {
+                        "id": 1039832084,
+                        "is_bot": true,
+                        "first_name": "Monitor Vital",
+                        "username": "MonitorVitalBot"
+                    }
+                }
+            },
             "GRAVEDAD": 3,
             "DEBUG": {
-                "HTTP_HOST": "localhost",
+                "HTTPS": "on",
+                "SSL_TLS_SNI": "archermil.ddns.net",
+                "HTTP_HOST": "archermil.ddns.net",
+                "CONTENT_TYPE": "application\/json",
+                "CONTENT_LENGTH": "536",
                 "HTTP_CONNECTION": "keep-alive",
-                "CONTENT_LENGTH": "24",
-                "HTTP_SEC_CH_UA": "\"Google Chrome\";v=\"83\"",
-                "HTTP_ACCEPT": "*\/*",
-                "HTTP_X_REQUESTED_WITH": "XMLHttpRequest",
-                "HTTP_SEC_CH_UA_MOBILE": "?0",
-                "HTTP_USER_AGENT": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/83.0.4103.97 Safari\/537.36",
-                "CONTENT_TYPE": "application\/x-www-form-urlencoded; charset=UTF-8",
-                "HTTP_ORIGIN": "http:\/\/localhost",
-                "HTTP_SEC_FETCH_SITE": "same-origin",
-                "HTTP_SEC_FETCH_MODE": "cors",
-                "HTTP_SEC_FETCH_DEST": "empty",
-                "HTTP_REFERER": "http:\/\/localhost\/Monitor_Vital\/",
-                "HTTP_ACCEPT_ENCODING": "gzip, deflate, br",
-                "HTTP_ACCEPT_LANGUAGE": "es-ES,es;q=0.9",
-                "HTTP_COOKIE": "PHPSESSID=nmgm7t26ndn5425tfo2rv7mg52",
+                "HTTP_ACCEPT_ENCODING": "gzip, deflate",
                 "PATH": "\/usr\/bin:\/bin:\/usr\/sbin:\/sbin",
                 "SERVER_SIGNATURE": "",
                 "SERVER_SOFTWARE": "Apache\/2.4.34 (Unix) LibreSSL\/2.5.5 PHP\/7.1.33",
-                "SERVER_NAME": "localhost",
-                "SERVER_ADDR": "::1",
-                "SERVER_PORT": "80",
-                "REMOTE_ADDR": "::1",
-                "DOCUMENT_ROOT": "\/Users\/victor\/Sites",
-                "REQUEST_SCHEME": "http",
+                "SERVER_NAME": "archermil.ddns.net",
+                "SERVER_ADDR": "192.168.1.40",
+                "SERVER_PORT": "443",
+                "REMOTE_ADDR": "91.108.6.35",
+                "DOCUMENT_ROOT": "\/Users\/victor\/Sites\/",
+                "REQUEST_SCHEME": "https",
                 "CONTEXT_PREFIX": "",
                 "CONTEXT_DOCUMENT_ROOT": "\/Users\/victor\/Sites",
                 "SERVER_ADMIN": "you@example.com",
-                "SCRIPT_FILENAME": "\/Users\/victor\/Sites\/Monitor_Vital\/code\/php\/login.php",
-                "REMOTE_PORT": "65179",
+                "SCRIPT_FILENAME": "\/Users\/victor\/Sites\/Monitor_Vital\/telegram\/telegram.php",
+                "REMOTE_PORT": "50380",
                 "GATEWAY_INTERFACE": "CGI\/1.1",
                 "SERVER_PROTOCOL": "HTTP\/1.1",
                 "REQUEST_METHOD": "POST",
                 "QUERY_STRING": "",
-                "REQUEST_URI": "\/Monitor_Vital\/code\/php\/login.php",
-                "SCRIPT_NAME": "\/Monitor_Vital\/code\/php\/login.php",
-                "PHP_SELF": "\/Monitor_Vital\/code\/php\/login.php",
-                "REQUEST_TIME_FLOAT": 1592090514.821,
-                "REQUEST_TIME": 1592090514
+                "REQUEST_URI": "\/Monitor_Vital\/telegram\/telegram.php",
+                "SCRIPT_NAME": "\/Monitor_Vital\/telegram\/telegram.php",
+                "PHP_SELF": "\/Monitor_Vital\/telegram\/telegram.php",
+                "REQUEST_TIME_FLOAT": 1592134355.144,
+                "REQUEST_TIME": 1592134355
+            }
+        },
+        "Log_14-06-20_01-32-47": {
+            "FECHA": "14\/06\/20",
+            "HORA": "13:32:47",
+            "TIPO": "Evento de Seguridad del Bot de Telegram",
+            "MENSAJE": {
+                "TEXT": "Se ha intentado usar el bot con otro grupo no autorizado",
+                "DATA": {
+                    "message_id": 659,
+                    "from": {
+                        "id": 240789415,
+                        "is_bot": false,
+                        "first_name": "V",
+                        "last_name": "F",
+                        "username": "Victor_Martinez_2000",
+                        "language_code": "es"
+                    },
+                    "chat": {
+                        "id": -433422194,
+                        "title": "\u274cHospital Falso\u274c",
+                        "type": "group",
+                        "all_members_are_administrators": true
+                    },
+                    "date": 1592134366,
+                    "new_chat_participant": {
+                        "id": 1039832084,
+                        "is_bot": true,
+                        "first_name": "Monitor Vital",
+                        "username": "MonitorVitalBot"
+                    },
+                    "new_chat_member": {
+                        "id": 1039832084,
+                        "is_bot": true,
+                        "first_name": "Monitor Vital",
+                        "username": "MonitorVitalBot"
+                    },
+                    "new_chat_members": [
+                        {
+                            "id": 1039832084,
+                            "is_bot": true,
+                            "first_name": "Monitor Vital",
+                            "username": "MonitorVitalBot"
+                        }
+                    ]
+                }
+            },
+            "GRAVEDAD": 3,
+            "DEBUG": {
+                "HTTPS": "on",
+                "SSL_TLS_SNI": "archermil.ddns.net",
+                "HTTP_HOST": "archermil.ddns.net",
+                "CONTENT_TYPE": "application\/json",
+                "CONTENT_LENGTH": "645",
+                "HTTP_CONNECTION": "keep-alive",
+                "HTTP_ACCEPT_ENCODING": "gzip, deflate",
+                "PATH": "\/usr\/bin:\/bin:\/usr\/sbin:\/sbin",
+                "SERVER_SIGNATURE": "",
+                "SERVER_SOFTWARE": "Apache\/2.4.34 (Unix) LibreSSL\/2.5.5 PHP\/7.1.33",
+                "SERVER_NAME": "archermil.ddns.net",
+                "SERVER_ADDR": "192.168.1.40",
+                "SERVER_PORT": "443",
+                "REMOTE_ADDR": "91.108.6.35",
+                "DOCUMENT_ROOT": "\/Users\/victor\/Sites\/",
+                "REQUEST_SCHEME": "https",
+                "CONTEXT_PREFIX": "",
+                "CONTEXT_DOCUMENT_ROOT": "\/Users\/victor\/Sites",
+                "SERVER_ADMIN": "you@example.com",
+                "SCRIPT_FILENAME": "\/Users\/victor\/Sites\/Monitor_Vital\/telegram\/telegram.php",
+                "REMOTE_PORT": "51240",
+                "GATEWAY_INTERFACE": "CGI\/1.1",
+                "SERVER_PROTOCOL": "HTTP\/1.1",
+                "REQUEST_METHOD": "POST",
+                "QUERY_STRING": "",
+                "REQUEST_URI": "\/Monitor_Vital\/telegram\/telegram.php",
+                "SCRIPT_NAME": "\/Monitor_Vital\/telegram\/telegram.php",
+                "PHP_SELF": "\/Monitor_Vital\/telegram\/telegram.php",
+                "REQUEST_TIME_FLOAT": 1592134366.847,
+                "REQUEST_TIME": 1592134366
+            }
+        },
+        "Log_14-06-20_01-43-55": {
+            "FECHA": "14\/06\/20",
+            "HORA": "13:43:55",
+            "TIPO": "Evento de Seguridad del Bot de Telegram",
+            "MENSAJE": {
+                "TEXT": "Se ha intentado usar el bot con otro grupo no autorizado",
+                "DATA": null
+            },
+            "GRAVEDAD": 3,
+            "DEBUG": {
+                "HTTPS": "on",
+                "SSL_TLS_SNI": "archermil.ddns.net",
+                "HTTP_HOST": "archermil.ddns.net",
+                "CONTENT_TYPE": "application\/json",
+                "CONTENT_LENGTH": "424",
+                "HTTP_CONNECTION": "keep-alive",
+                "HTTP_ACCEPT_ENCODING": "gzip, deflate",
+                "PATH": "\/usr\/bin:\/bin:\/usr\/sbin:\/sbin",
+                "SERVER_SIGNATURE": "",
+                "SERVER_SOFTWARE": "Apache\/2.4.34 (Unix) LibreSSL\/2.5.5 PHP\/7.1.33",
+                "SERVER_NAME": "archermil.ddns.net",
+                "SERVER_ADDR": "192.168.1.40",
+                "SERVER_PORT": "443",
+                "REMOTE_ADDR": "91.108.6.35",
+                "DOCUMENT_ROOT": "\/Users\/victor\/Sites\/",
+                "REQUEST_SCHEME": "https",
+                "CONTEXT_PREFIX": "",
+                "CONTEXT_DOCUMENT_ROOT": "\/Users\/victor\/Sites",
+                "SERVER_ADMIN": "you@example.com",
+                "SCRIPT_FILENAME": "\/Users\/victor\/Sites\/Monitor_Vital\/telegram\/telegram.php",
+                "REMOTE_PORT": "47264",
+                "GATEWAY_INTERFACE": "CGI\/1.1",
+                "SERVER_PROTOCOL": "HTTP\/1.1",
+                "REQUEST_METHOD": "POST",
+                "QUERY_STRING": "",
+                "REQUEST_URI": "\/Monitor_Vital\/telegram\/telegram.php",
+                "SCRIPT_NAME": "\/Monitor_Vital\/telegram\/telegram.php",
+                "PHP_SELF": "\/Monitor_Vital\/telegram\/telegram.php",
+                "REQUEST_TIME_FLOAT": 1592135035.161,
+                "REQUEST_TIME": 1592135035
+            }
+        },
+        "Log_14-06-20_01-45-29": {
+            "FECHA": "14\/06\/20",
+            "HORA": "13:45:29",
+            "TIPO": "Evento de Seguridad del Bot de Telegram",
+            "MENSAJE": {
+                "TEXT": "Una persona no autorizada ha intentado utilizar el bot",
+                "DATA": {
+                    "message_id": 688,
+                    "from": {
+                        "id": 240789415,
+                        "is_bot": false,
+                        "first_name": "V",
+                        "last_name": "F",
+                        "username": "Victor_Martinez_2000",
+                        "language_code": "es"
+                    },
+                    "chat": {
+                        "id": -444966775,
+                        "title": "\ud83c\udfe5Hospital\ud83c\udfe5",
+                        "type": "group",
+                        "all_members_are_administrators": true
+                    },
+                    "date": 1592135129,
+                    "text": "\/busca@resp",
+                    "entities": [
+                        {
+                            "offset": 0,
+                            "length": 11,
+                            "type": "bot_command"
+                        }
+                    ]
+                }
+            },
+            "GRAVEDAD": 3,
+            "DEBUG": {
+                "HTTPS": "on",
+                "SSL_TLS_SNI": "archermil.ddns.net",
+                "HTTP_HOST": "archermil.ddns.net",
+                "CONTENT_TYPE": "application\/json",
+                "CONTENT_LENGTH": "399",
+                "HTTP_CONNECTION": "keep-alive",
+                "HTTP_ACCEPT_ENCODING": "gzip, deflate",
+                "PATH": "\/usr\/bin:\/bin:\/usr\/sbin:\/sbin",
+                "SERVER_SIGNATURE": "",
+                "SERVER_SOFTWARE": "Apache\/2.4.34 (Unix) LibreSSL\/2.5.5 PHP\/7.1.33",
+                "SERVER_NAME": "archermil.ddns.net",
+                "SERVER_ADDR": "192.168.1.40",
+                "SERVER_PORT": "443",
+                "REMOTE_ADDR": "91.108.6.35",
+                "DOCUMENT_ROOT": "\/Users\/victor\/Sites\/",
+                "REQUEST_SCHEME": "https",
+                "CONTEXT_PREFIX": "",
+                "CONTEXT_DOCUMENT_ROOT": "\/Users\/victor\/Sites",
+                "SERVER_ADMIN": "you@example.com",
+                "SCRIPT_FILENAME": "\/Users\/victor\/Sites\/Monitor_Vital\/telegram\/telegram.php",
+                "REMOTE_PORT": "34856",
+                "GATEWAY_INTERFACE": "CGI\/1.1",
+                "SERVER_PROTOCOL": "HTTP\/1.1",
+                "REQUEST_METHOD": "POST",
+                "QUERY_STRING": "",
+                "REQUEST_URI": "\/Monitor_Vital\/telegram\/telegram.php",
+                "SCRIPT_NAME": "\/Monitor_Vital\/telegram\/telegram.php",
+                "PHP_SELF": "\/Monitor_Vital\/telegram\/telegram.php",
+                "REQUEST_TIME_FLOAT": 1592135129.493,
+                "REQUEST_TIME": 1592135129
             }
         }
     }

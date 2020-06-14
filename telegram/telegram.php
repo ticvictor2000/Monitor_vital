@@ -94,8 +94,8 @@ if ($bot->get('chatType') == 'private') {
 
 // Search processing engine
 
-if (substr($msg,0,5) == 'busca') {
-     $raw_command = substr($msg,5,strlen($msg));
+if (substr($msg,0,6) == '/busca') {
+     $raw_command = substr($msg,6,strlen($msg));
      $arguments = explode('@',$raw_command);
 
      if (isset($arguments[3])) {
@@ -108,10 +108,17 @@ if (substr($msg,0,5) == 'busca') {
           $arr = $db->search($pdo,$arguments[1],$arguments[2]);
      }
 
+     if (!isset($arguments[1]) || $arguments[1] == '') {
+          // Error
+          $bot->sendMessage('Faltan argumentos. Revisa la documentación');
+          die();
+     }
+
      if (!isset($arguments[2])) {
           // Filter by type
           $arr = $db->search($pdo,$arguments[1]);
      }
+
 
      if (!is_array($arr)) {
           $bot->sendMessage('Hubo un error interno, contacte con el Administrador');
@@ -157,7 +164,7 @@ if (substr($msg,0,5) == 'busca') {
 
 switch ($msg) {
      // Normal commands
-     case 'equipos':
+     case '/equipos':
           // Get types of equipment and create a table
           $types = $db->getTypes($pdo);
           if (!is_array($types)) {
@@ -180,7 +187,7 @@ switch ($msg) {
           break;
 
      // Admin commands
-     case 'log':
+     case '/log':
           if ($admin) {
                $html2pdf->writeHTML(getLog());
                $filename = 'Logs_' . date('YmdHis');
@@ -192,7 +199,7 @@ switch ($msg) {
                $bot->sendMessage('No conozco ese comando');
           }
           break;
-     case 'ubicaciones_equipamiento':
+     case '/ubicaciones_equipamiento':
           if ($admin) {
                $html2pdf->writeHTML($db->getAllLocations($pdo));
                $filename = 'Ubicaciones_' . date('YmdHis');
