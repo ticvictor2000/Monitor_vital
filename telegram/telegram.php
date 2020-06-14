@@ -130,7 +130,20 @@ if (substr($msg,0,6) == '/busca') {
           die();
      }
      if (count($arr)>0) {
-          $table = '<table border="1">';
+          $table = '
+               <table style="font-size: 20px; text-align: center;" border=1>
+                   <tr>
+                       <td rowspan=2><img src="https://archermil.ddns.net/Monitor_Vital/assets/img/logo.jpg" height=50 width=50/></td>
+                       <td style="font-size: 30px; padding-left:200px">MONITOR VITAL</td>
+                   </tr>
+                   <tr>
+                       <td style="padding-left:200px">Lista de equipamiento</td>
+                   </tr>
+               </table>
+               <hr style="border: 1px solid blue;" />
+          ';
+
+          $table. = '<table border="1">';
           $table .= '
                          <tr>
                               <td>TIPO</td>
@@ -150,6 +163,12 @@ if (substr($msg,0,6) == '/busca') {
                $table .= '</tr>';
           }
           $table .= '</table>';
+
+
+
+          $table .= '<hr style="border: 1px solid green; margin-top: 150px"/>
+          <span style="margin-left: 835px">Actualizado el día  14/06/2020 a la hora 19:35</span>';
+
           $html2pdf->writeHTML($table);
           $filename = 'Ubicaciones_' . date('YmdHis');
           $pdf_raw  = $html2pdf->output($filename, 'S');
