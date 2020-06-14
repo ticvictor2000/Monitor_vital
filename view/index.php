@@ -52,7 +52,7 @@
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="./users.php">
-              <i class="material-icons">person</i>
+              <i class="material-icons">group</i>
               <p>Gestión de usuarios</p>
             </a>
           </li>
@@ -68,6 +68,12 @@
               <p>Dispositivos de red</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./medicaleq.php">
+              <i class="material-icons">local_hospital</i>
+              <p>Equipamiento médico</p>
+            </a>
+          </li>
           <li class="nav-item ">
             <a class="nav-link" href="./telegram.php">
               <i class="material-icons">send</i>
@@ -76,7 +82,7 @@
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="./security.php">
-              <i class="material-icons">notifications</i>
+              <i class="material-icons">security</i>
               <p>Panel de seguridad</p>
             </a>
           </li>

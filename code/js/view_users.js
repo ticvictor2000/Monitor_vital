@@ -164,10 +164,5 @@ form_del.onsubmit = function(e) {
           alert('Operación cancelada');
           e.preventDefault();
      }
-
-
-}
-
-form_edit.onsubmit = function(e) {
      
 }

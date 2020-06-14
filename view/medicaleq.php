@@ -4,6 +4,7 @@
 <?php $db = new Db();  ?>
 <?php $pdo = $db->connect(); ?>
 
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -12,7 +13,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>Gestión de usuarios</title>
+  <title>Equipamiento médico</title>
   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
@@ -24,7 +25,6 @@
 </head>
 
 <body class="">
-
   <div class="wrapper ">
     <div class="sidebar" data-color="<?= getColor(); ?>" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
       <!--
@@ -33,7 +33,7 @@
         Tip 2: you can also add an image using data-image tag
     -->
       <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
-        Monitor vital
+          Monitor vital
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
@@ -49,25 +49,25 @@
               <p>Mi perfil</p>
             </a>
           </li>
-          <li class="nav-item active">
+          <li class="nav-item">
             <a class="nav-link" href="./users.php">
               <i class="material-icons">group</i>
               <p>Gestión de usuarios</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item">
             <a class="nav-link" href="./ports.php">
               <i class="material-icons">settings_input_component</i>
               <p>Puertos</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item">
             <a class="nav-link" href="./netdevices.php">
               <i class="material-icons">router</i>
               <p>Dispositivos de red</p>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item active">
             <a class="nav-link" href="./medicaleq.php">
               <i class="material-icons">local_hospital</i>
               <p>Equipamiento médico</p>
@@ -93,7 +93,7 @@
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:;">Gestión de usuarios</a>
+            <a class="navbar-brand" href="javascript:;">Equipamiento médico</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -140,6 +140,7 @@
                   <a class="dropdown-item" id="logoff" href="../code/php/logoff.php">Cerrar sesión</a>
                 </div>
               </li>
+              </li>
             </ul>
           </div>
         </div>
@@ -149,175 +150,31 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Usuarios</h4>
-                  <p class="card-category">Datos generales</p>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table">
-                      <thead class=" text-primary">
-                        <th>ID</th>
-                        <th>ID de telegram</th>
-                        <th>Correo electrónico</th>
-                        <th>Nombre</th>
-                        <th>Apellidos</th>
-                        <th>Rol</th>
-                      </thead>
-                      <tbody>
-                        <?php $noAdmin = true; ?>
-                        <?php if($_SESSION['user']['ROLE'] == 'admin'): $noAdmin = false; endif; ?>
-                        <?php foreach ($db->getUsers($pdo,$noAdmin) as $user): ?>
-                            <tr>
-                              <td><?= $user['ID'] ?></td>
-                              <td><?= $user['TID'] ?></td>
-                              <td><?= $user['EMAIL'] ?></td>
-                              <td><?= $user['NAME'] ?></td>
-                              <td><?= $user['SURNAME'] ?></td>
-                              <td><?= $user['ROLE'] ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                      </tbody>
-                    </table>
+                 <div class="card">
+                  <div class="card-header card-header-primary">
+                    <h4 class="card-title">Equipamiento médico</h4>
+                    <p class="card-category">Modifica los datos del equipamiento detectado</p>
+                    <span id="result"></span>
+                    <img src="../assets/gif/loading.gif" height="50px" width="50px" id="loading"></img>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead class=" text-primary">
+                          <th>MAC</th>
+                          <th>Tipo</th>
+                          <th>Marca</th>
+                          <th>Modelo</th>
+                          <th>Actualizado</th>
+                        </thead>
+                        <tbody id="medialeq_form"></tbody>
+                      </table>
+                    </div>
+                    <button id="medicaleq_btn" type="button" class="btn btn-primary">Actualizar equipamiento</button>
                   </div>
                 </div>
-              </div>
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Usuarios</h4>
-                  <p class="card-category">Crear un usuario</p>
-                  <p id="resp_msg"></p>
-                  <img src="../assets/gif/loading.gif" height="50px" width="50px" id="loading"></img>
-                </div>
-                <div class="card-body">
-                  <form id="new_user" action="">
-                    <div class="row">
-                      <div class="col-md-3">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Nombre de usuario</label>
-                          <input type="text" class="form-control" id="username">
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Correo electrónico</label>
-                          <input type="email" class="form-control" id="email">
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Rol</label>
-                          <input type="text" class="form-control" id="role" list="roles">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Nombre</label>
-                          <input type="text" class="form-control" id="name">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Apellidos</label>
-                          <input type="text" class="form-control" id="surname">
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Usuario de telegram</label>
-                          <input type="text" class="form-control" id="tusername">
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Contraseña</label>
-                          <input type="password" class="form-control" id="password">
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Confirmar contraseña</label>
-                          <input type="password" class="form-control" id="passwordc">
-                        </div>
-                      </div>
-                    </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary pull-right">Crear usuario</button>
-                    <div class="clearfix"></div>
-                  </form>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Usuarios</h4>
-                  <p class="card-category">Eliminar un usuario</p>
-                  <p id="resp_msg_del"></p>
-                  <img src="../assets/gif/loading.gif" height="50px" width="50px" id="loading_del"></img>
-                </div>
-                <div class="card-body">
-                  <form id="del_user" action="">
-                    <div class="row">
-                      <div class="col-md-3">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Nombre de usuario</label>
-                          <input type="text" class="form-control" id="dusername">
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Confirmar nombre de usuario</label>
-                          <input type="text" class="form-control" id="dusernamec">
-                        </div>
-                      </div>
-                    </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary pull-right">Borrar usuario</button>
-                    <div class="clearfix"></div>
-                  </form>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Usuarios</h4>
-                  <p class="card-category">Restablecer contraseña</p>
-                  <p id="resp_msg_2"></p>
-                  <img src="../assets/gif/loading.gif" height="50px" width="50px" id="loading_2"></img>
-                </div>
-                <div class="card-body">
-                  <form id="reset_passwd" action="">
-                    <div class="row">
-                      <div class="col-md-3">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Nombre de usuario</label>
-                          <input type="text" class="form-control" id="reset_username">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Contraseña</label>
-                          <input type="password" class="form-control" id="npassword">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Confirmar contraseña</label>
-                          <input type="password" class="form-control" id="npasswordc">
-                        </div>
-                      </div>
-                    </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary pull-right">Restablecer contraseña</button>
-                    <div class="clearfix"></div>
-                  </form>
-                </div>
-              </div>
             </div>
           </div>
-        </div>
-      </div>
       <footer class="footer">
         <div class="container-fluid">
           <nav class="float-left">
@@ -355,13 +212,22 @@
       </footer>
     </div>
   </div>
-
-  <datalist id="roles">
-      <?php if ($_SESSION['user']['ROLE'] == 'admin'): ?>
-           <option value="admin">
-      <?php endif; ?>
-      <option value="tech">
-      <option value="medical">
+  <datalist id="yesno">
+       <option value="1">Sí</option>
+       <option value="0">No</option>
+  </datalist>
+  <datalist id="types">
+       <option value="ap">Punto de acceso</option>
+       <option value="switch">Switch</option>
+  </datalist>
+  <datalist id="brands">
+      <option value="cisco">Ciso</option>
+      <option value="openwrt">Genérica (OpenWRT)</option>
+  </datalist>
+  <datalist id="types_input">
+       <?php foreach($db->getTypes($pdo) as $types): ?>
+            <option><?= $types['TYPE'] ?></option>
+       <?php endforeach; ?>
   </datalist>
   <!--   Core JS Files   -->
   <script src="../code/js/core/jquery.min.js"></script>
@@ -396,8 +262,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
   <!-- Library for adding dinamically elements -->
   <script src="../code/js/plugins/arrive.min.js"></script>
-  <!--  Forms   -->
-  <script src="../code/js/view_users.js"></script>
+  <!-- JS    -->
+  <script src="../code/js/view_medicaleq.js"></script>
   <!-- Chartist JS -->
   <script src="../code/js/plugins/chartist.min.js"></script>
   <!--  Notifications Plugin    -->

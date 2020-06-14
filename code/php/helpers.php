@@ -127,6 +127,112 @@ function getLog() {
      return $table;
 }
 
+function getTelegramCnf($value) {
+     $cnf_telegram = json_decode(file_get_contents(dirname(__DIR__,2) . '/code/json/cnf.json'),true)['Telegram'];
+     switch ($value) {
+          case 'token':
+               return $cnf_telegram['BotToken'];
+               break;
+          case 'admins':
+               if (is_array($cnf_telegram['AdminId'])) {
+                    $listAdmins_str = '';
+                    for ($i=0; $i < count($cnf_telegram['AdminId']); $i++) {
+                         $listAdmins_str .= $cnf_telegram['AdminId'][$i];
+                         if (count($cnf_telegram['AdminId'])-1 != $i) {
+                              $listAdmins_str .= ', ';
+                         }
+                    }
+                    return $listAdmins_str;
+               } else {
+                    return $cnf_telegram['AdminId'];
+               }
+               break;
+          case 'groupid':
+               return $cnf_telegram['GroupId'];
+               break;
+          case 'listMode':
+               return $cnf_telegram['List']['Mode'];
+               break;
+          case 'listUsers':
+               if (is_array($cnf_telegram['List']['Users'])) {
+                    $listUsers_str = '';
+                    for ($i=0; $i < count($cnf_telegram['List']['Users']); $i++) {
+                         $listUsers_str .= $cnf_telegram['List']['Users'][$i];
+                         if (count($cnf_telegram['List']['Users'])-1 != $i) {
+                              $listUsers_str .= ', ';
+                         }
+                    }
+                    return $listUsers_str;
+               } else {
+                    return $cnf_telegram['List']['Users'];
+               }
+               break;
+          case 'docsDirs':
+               return $cnf_telegram['Files_dirs']['Docs'];
+               break;
+          case 'imgsDirs':
+               return $cnf_telegram['Files_dirs']['Images'];
+               break;
+     }
+}
+
+function getSecurity($raw=false) {
+     $logs = json_decode(file_get_contents(dirname(__DIR__,2) . '/code/json/log.json'),true)['Logs'];
+     if ($raw) {
+          $logs_download = array();
+          $logs_download_i = 0;
+          foreach ($logs as $log) {
+               if ($log['GRAVEDAD']==3) {
+                    $logs_download[$logs_download_i] = $log;
+                    $logs_download_i++;
+               }
+          }
+          return json_encode($logs_download,JSON_PRETTY_PRINT);
+     } else {
+          $logs_return = array();
+          $logs_return_i = 0;
+          foreach ($logs as $log) {
+               if ($log['GRAVEDAD']==3) {
+                    if (!is_array($log['MENSAJE'])) {
+                         $logs_return[$logs_return_i]['MESSAGE'] = $log['MENSAJE'];
+                         $logs_return[$logs_return_i]['TYPE'] = $log['TIPO'];
+                         $logs_return[$logs_return_i]['DATE'] = $log['FECHA'];
+                         $logs_return[$logs_return_i]['TIME'] = $log['HORA'];
+                         $logs_return[$logs_return_i]['AT_IP'] = $log['DEBUG']['REMOTE_ADDR'];
+                         $logs_return[$logs_return_i]['PORT'] = $log['DEBUG']['SERVER_PORT'];
+                         $logs_return[$logs_return_i]['SCRIPT'] = $log['DEBUG']['SCRIPT_FILENAME'];
+                         $logs_return_i++;
+                    }
+               }
+          }
+          return $logs_return;
+     }
+}
+
+
+
+function getLogs() {
+     $logs = json_decode(file_get_contents(dirname(__DIR__,2) . '/code/json/log.json'),true)['Logs'];
+     $logs_return = array();
+     $logs_return_i = 0;
+     foreach ($logs as $log) {
+          if ($log['GRAVEDAD']!=3) {
+               if (!is_array($log['MENSAJE'])) {
+                    $logs_return[$logs_return_i]['MESSAGE'] = $log['MENSAJE'];
+                    $logs_return[$logs_return_i]['TYPE'] = $log['TIPO'];
+                    $logs_return[$logs_return_i]['CODE'] = $log['GRAVEDAD'];
+                    $logs_return[$logs_return_i]['DATE'] = $log['FECHA'];
+                    $logs_return[$logs_return_i]['TIME'] = $log['HORA'];
+                    $logs_return[$logs_return_i]['AT_IP'] = $log['DEBUG']['REMOTE_ADDR'];
+                    $logs_return[$logs_return_i]['PORT'] = $log['DEBUG']['SERVER_PORT'];
+                    $logs_return[$logs_return_i]['SCRIPT'] = $log['DEBUG']['SCRIPT_FILENAME'];
+                    $logs_return_i++;
+               }
+          }
+     }
+     return $logs_return;
+}
+
 
 
 /* COMMANDS CISCO */

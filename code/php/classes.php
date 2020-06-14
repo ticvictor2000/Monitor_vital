@@ -321,7 +321,7 @@ class Db {
           try {
                $del_user = $pdo->query("DELETE FROM Users WHERE USERNAME='$username'");
           } catch (PDOException $e) {
-               return $e;
+               return $e->getMessage();
           }
           return true;
      }
@@ -330,7 +330,7 @@ class Db {
           try {
                $user_role_c = $pdo->query("SELECT ROLE FROM Users WHERE USERNAME='$user'")->fetchAll(PDO::FETCH_ASSOC);
           } catch (PDOException $e) {
-               return $e;
+               return $e->getMessage();
           }
           return $user_role_c[0]['ROLE'];
      }
@@ -339,7 +339,7 @@ class Db {
           try {
                $update_pass = $pdo->query("UPDATE Users SET PASS='$npass_safe' WHERE USERNAME='$user'");
           } catch (PDOException $e) {
-               return $e;
+               return $e->getMessage();
           }
           return true;
      }
@@ -348,7 +348,7 @@ class Db {
           try {
                $types = $pdo->query("SELECT DISTINCT TYPE FROM Medical_eq")->fetchAll(PDO::FETCH_ASSOC);
           } catch (PDOException $e) {
-               return $e;
+               return $e->getMessage();
           }
           return $types;
      }
@@ -413,6 +413,25 @@ class Db {
           }
           $table .= '</table>';
           return $table;
+     }
+
+     public function removeNd($pdo,$macnd) {
+          // First we need to delete all the ports of the netdevice
+          try {
+               $delete_nd_ports = $pdo->query("DELETE FROM Ports WHERE MACND='$macnd'");
+          } catch (PDOException $e) {
+               return $e->getMessage();
+          }
+
+          // Then we proceed to delete the device itself
+
+          try {
+               $delete_nd = $pdo->query("DELETE FROM Net_devices WHERE MACND='$macnd'");
+          } catch (PDOException $e) {
+               return $e->getMessage();
+          }
+
+          return true;
      }
 }
 

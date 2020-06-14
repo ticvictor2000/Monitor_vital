@@ -66,6 +66,12 @@
               <p>Dispositivos de red</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./medicaleq.php">
+              <i class="material-icons">local_hospital</i>
+              <p>Equipamiento médico</p>
+            </a>
+          </li>
           <li class="nav-item active">
             <a class="nav-link" href="./telegram.php">
               <i class="material-icons">send</i>
@@ -143,26 +149,111 @@
         <div class="container-fluid">
           <div class="container-fluid">
             <div class="card card-plain">
+             <div class="card">
               <div class="card-header card-header-primary">
-                <h4 class="card-title">Material Design Icons</h4>
-                <p class="card-category">Handcrafted by our friends from
-                  <a target="_blank" href="https://design.google.com/icons/">Google</a>
-                </p>
+                <h4 class="card-title">Telegram</h4>
+                <p class="card-category">Configuración general del bot</p>
+                <span id="resp_change_gen_cnf"></span>
+                <img src="../assets/gif/loading.gif" height="50px" width="50px" id="loading_change_gen_cnf"></img>
               </div>
               <div class="row">
                 <div class="col-md-12">
                   <div class="card-body">
-                    <div class="iframe-container d-none d-lg-block">
-
-                    </div>
-                    <div class="col-md-12 d-none d-sm-block d-md-block d-lg-none d-block d-sm-none text-center ml-auto mr-auto">
-                      <h5>The icons are visible on Desktop mode inside an iframe. Since the iframe is not working on Mobile and Tablets please visit the icons on their original page on Google. Check the
-                        <a href="https://design.google.com/icons/" target="_blank">Material Icons</a>
-                      </h5>
-                    </div>
+                       <form id="change_gen_cnf" action="">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Número Token del Bot</label>
+                              <input type="text" class="form-control" id="botToken" value="<?= getTelegramCnf('token'); ?>">
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Identificadores de los administradores</label>
+                              <input type="text" class="form-control" id="admins" value="<?= getTelegramCnf('admins'); ?>">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Identificador del grupo autorizado</label>
+                              <input type="text" class="form-control" id="groupId" value="<?= getTelegramCnf('groupid'); ?>">
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Cambiar configuración</button>
+                        <div class="clearfix"></div>
+                      </form>
                   </div>
                 </div>
               </div>
+             </div>
+             <div class="card">
+              <div class="card-header card-header-primary">
+                <h4 class="card-title">Bot</h4>
+                <p class="card-category">Control de uso</p>
+                <span id="resp_change_use_cnf"></span>
+                <img src="../assets/gif/loading.gif" height="50px" width="50px" id="loading_change_user_cnf"></img>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card-body">
+                       <form id="change_use_cnf" action="">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Modo de configuración</label>
+                              <input type="text" class="form-control" id="mode" list="modes" value="<?= getTelegramCnf('listMode'); ?>">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Lista de usuarios</label>
+                              <input type="text" class="form-control" id="users_list" value="<?= getTelegramCnf('listUsers'); ?>">
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Cambiar modo</button>
+                        <div class="clearfix"></div>
+                      </form>
+                  </div>
+                </div>
+              </div>
+             </div>
+             <div class="card">
+              <div class="card-header card-header-primary">
+                <h4 class="card-title">Bot</h4>
+                <p class="card-category">Rutas de archivos</p>
+                <span id="resp_change_rte_cnf"></span>
+                <img src="../assets/gif/loading.gif" height="50px" width="50px" id="loading_change_rte_cnf"></img>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card-body">
+                       <form id="change_rte_cnf" action="">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Ruta pública de documentos temporales</label>
+                              <input type="text" class="form-control" id="docs_path" value="<?= getTelegramCnf('docsDirs'); ?>">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Ruta pública de imágenes temporales</label>
+                              <input type="text" class="form-control" id="imgs_path" value="<?= getTelegramCnf('imgsDirs'); ?>">
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Cambiar rutas</button>
+                        <div class="clearfix"></div>
+                      </form>
+                  </div>
+                </div>
+              </div>
+             </div>
             </div>
           </div>
         </div>
@@ -204,74 +295,10 @@
       </footer>
     </div>
   </div>
-  <div class="fixed-plugin">
-    <div class="dropdown show-dropdown">
-      <a href="#" data-toggle="dropdown">
-        <i class="fa fa-cog fa-2x"> </i>
-      </a>
-      <ul class="dropdown-menu">
-        <li class="header-title"> Sidebar Filters</li>
-        <li class="adjustments-line">
-          <a href="javascript:void(0)" class="switch-trigger active-color">
-            <div class="badge-colors ml-auto mr-auto">
-              <span class="badge filter badge-purple" data-color="purple"></span>
-              <span class="badge filter badge-azure" data-color="azure"></span>
-              <span class="badge filter badge-green" data-color="green"></span>
-              <span class="badge filter badge-warning" data-color="orange"></span>
-              <span class="badge filter badge-danger" data-color="danger"></span>
-              <span class="badge filter badge-rose active" data-color="rose"></span>
-            </div>
-            <div class="clearfix"></div>
-          </a>
-        </li>
-        <li class="header-title">Images</li>
-        <li class="active">
-          <a class="img-holder switch-trigger" href="javascript:void(0)">
-            <img src="../assets/img/sidebar-1.jpg" alt="">
-          </a>
-        </li>
-        <li>
-          <a class="img-holder switch-trigger" href="javascript:void(0)">
-            <img src="../assets/img/sidebar-2.jpg" alt="">
-          </a>
-        </li>
-        <li>
-          <a class="img-holder switch-trigger" href="javascript:void(0)">
-            <img src="../assets/img/sidebar-3.jpg" alt="">
-          </a>
-        </li>
-        <li>
-          <a class="img-holder switch-trigger" href="javascript:void(0)">
-            <img src="../assets/img/sidebar-4.jpg" alt="">
-          </a>
-        </li>
-        <li class="button-container">
-          <a href="https://www.creative-tim.com/product/material-dashboard" target="_blank" class="btn btn-primary btn-block">Free Download</a>
-        </li>
-        <!-- <li class="header-title">Want more components?</li>
-            <li class="button-container">
-                <a href="https://www.creative-tim.com/product/material-dashboard-pro" target="_blank" class="btn btn-warning btn-block">
-                  Get the pro version
-                </a>
-            </li> -->
-        <li class="button-container">
-          <a href="https://demos.creative-tim.com/material-dashboard/docs/2.1/getting-started/introduction.html" target="_blank" class="btn btn-default btn-block">
-            View Documentation
-          </a>
-        </li>
-        <li class="button-container github-star">
-          <a class="github-button" href="https://github.com/creativetimofficial/material-dashboard" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star ntkme/github-buttons on GitHub">Star</a>
-        </li>
-        <li class="header-title">Thank you for 95 shares!</li>
-        <li class="button-container text-center">
-          <button id="twitter" class="btn btn-round btn-twitter"><i class="fa fa-twitter"></i> &middot; 45</button>
-          <button id="facebook" class="btn btn-round btn-facebook"><i class="fa fa-facebook-f"></i> &middot; 50</button>
-          <br>
-          <br>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <datalist id="modes">
+     <option value="black">Lista negra</option>
+     <option value="white">Lista blanca</option>
+  </datalist>
   <!--   Core JS Files   -->
   <script src="../code/js/core/jquery.min.js"></script>
   <script src="../code/js/core/popper.min.js"></script>
@@ -305,8 +332,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
   <!-- Library for adding dinamically elements -->
   <script src="../code/js/plugins/arrive.min.js"></script>
-  <!--  Google Maps Plugin    -->
-
+  <!--  Telegram JS    -->
+  <script src="../code/js/view_telegram.js"></script>
   <!-- Chartist JS -->
   <script src="../code/js/plugins/chartist.min.js"></script>
   <!--  Notifications Plugin    -->

@@ -27,8 +27,8 @@
             ]
         },
         "Files_dirs": {
-            "Docs": "https://archermil.ddns.net/Monitor_Vital/telegram/files/docs/",
-            "Images": "https://archermil.ddns.net/Monitor_Vital/telegram/files/imgs/"
+            "Docs": "https:\/\/archermil.ddns.net\/Monitor_Vital\/telegram\/files\/docs\/",
+            "Images": "https:\/\/archermil.ddns.net\/Monitor_Vital\/telegram\/files\/imgs\/"
         }
     }
 }

@@ -21,6 +21,42 @@
   <link href="../code/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../code/css/demo.css" rel="stylesheet" />
+  <style>
+     .accordion {
+       background-color: #eee;
+       cursor: pointer;
+       padding: 18px;
+       width: 100%;
+       border: none;
+       text-align: left;
+       outline: none;
+       transition: 0.4s;
+     }
+
+     .active2, .accordion:hover {
+       background-color: #ccc;
+     }
+
+     .accordion:after {
+       content: '\002B';
+       color: #777;
+       font-weight: bold;
+       float: right;
+       margin-left: 5px;
+     }
+
+     .active2:after {
+       content: "\2212";
+     }
+
+     .panel {
+       padding: 0 18px;
+       background-color: white;
+       max-height: 0;
+       overflow: hidden;
+       transition: max-height 0.2s ease-out;
+     }
+  </style>
 </head>
 
 <body class="">
@@ -50,7 +86,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="./users.php">
-              <i class="material-icons">person</i>
+              <i class="material-icons">group</i>
               <p>Gestión de usuarios</p>
             </a>
           </li>
@@ -67,6 +103,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="./medicaleq.php">
+              <i class="material-icons">local_hospital</i>
+              <p>Equipamiento médico</p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="./telegram.php">
               <i class="material-icons">send</i>
               <p>Telegram</p>
@@ -74,7 +116,7 @@
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="./security.php">
-              <i class="material-icons">notifications</i>
+              <i class="material-icons">security</i>
               <p>Panel de seguridad</p>
             </a>
           </li>
@@ -130,7 +172,7 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                   <a class="dropdown-item" href="user.php"><?= $_SESSION['user']['NAME'] ?></a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" id="logoff">Cerrar sesión</a>
+                  <a class="dropdown-item" id="logoff" href="../code/php/logoff.php">Cerrar sesión</a>
                 </div>
               </li>
               </li>
@@ -143,25 +185,106 @@
         <div class="container-fluid">
           <div class="container-fluid">
             <div class="card card-plain">
+             <div class="card">
               <div class="card-header card-header-primary">
-                <h4 class="card-title">Material Design Icons</h4>
-                <p class="card-category">Handcrafted by our friends from
-                  <a target="_blank" href="https://design.google.com/icons/">Google</a>
-                </p>
+                <h4 class="card-title">Alertas de seguridad</h4>
+                <p class="card-category">Analizar las alertas</p>
               </div>
               <div class="row">
                 <div class="col-md-12">
                   <div class="card-body">
-                    <div class="iframe-container d-none d-lg-block">
-
-                    </div>
-                    <div class="col-md-12 d-none d-sm-block d-md-block d-lg-none d-block d-sm-none text-center ml-auto mr-auto">
-                      <h5>The icons are visible on Desktop mode inside an iframe. Since the iframe is not working on Mobile and Tablets please visit the icons on their original page on Google. Check the
-                        <a href="https://design.google.com/icons/" target="_blank">Material Icons</a>
-                      </h5>
-                    </div>
+                       <?php foreach(getSecurity() as $event): ?>
+                            <button class="accordion"><?= $event['MESSAGE']; ?></button>
+                           <div class="panel">
+                                <table class="table">
+                                    <tr>
+                                         <th class="text-primary">Mensaje</th>
+                                         <td><?= $event['MESSAGE']; ?></td>
+                                    </tr>
+                                    <tr>
+                                         <th class="text-primary">Tipo</th>
+                                          <td><?= $event['TYPE']; ?></td>
+                                    </tr>
+                                    <tr>
+                                         <th class="text-primary">Fecha</th>
+                                         <td><?= $event['DATE']; ?></td>
+                                    </tr>
+                                    <tr>
+                                         <th class="text-primary">Hora</th>
+                                         <td><?= $event['TIME']; ?></td>
+                                    </tr>
+                                    <tr>
+                                         <th class="text-primary">Dirección IP del atacante</th>
+                                          <td><?= $event['AT_IP']; ?></td>
+                                    </tr>
+                                    <tr>
+                                         <th class="text-primary">Puerto de entrada</th>
+                                         <td><?= $event['PORT']; ?></td>
+                                    </tr>
+                                    <tr>
+                                         <th class="text-primary">Script sobre el que se realizó el ataque</th>
+                                         <td><?= $event['SCRIPT']; ?></td>
+                                    </tr>
+                                </table>
+                           </div>
+                           <button type="button" class="btn btn-primary" id="download_security" onclick="window.location.href = '../code/php/security.php?act=download_security'">Descargar alertas</button>
+                           <button type="button" class="btn btn-primary" id="delete_security" onclick="window.location.href = '../code/php/security.php?act=delete_security'">Borrar alertas</button>
+                       <?php endforeach; ?>
                   </div>
                 </div>
+              </div>
+              </div>
+              <div class="card">
+              <div class="card-header card-header-primary">
+                <h4 class="card-title">Registro de errores</h4>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card-body">
+                       <?php foreach(getLogs() as $event): ?>
+                            <button class="accordion"><?= $event['MESSAGE']; ?></button>
+                           <div class="panel">
+                                <table class="table">
+                                    <tr>
+                                         <th class="text-primary">Mensaje</th>
+                                         <td><?= $event['MESSAGE']; ?></td>
+                                    </tr>
+                                    <tr>
+                                         <th class="text-primary">Tipo</th>
+                                          <td><?= $event['TYPE']; ?></td>
+                                    </tr>
+                                    <tr>
+                                         <th class="text-primary">Gravedad</th>
+                                         <td><?= $event['CODE']; ?></td>
+                                    </tr>
+                                    <tr>
+                                         <th class="text-primary">Fecha</th>
+                                         <td><?= $event['DATE']; ?></td>
+                                    </tr>
+                                    <tr>
+                                         <th class="text-primary">Hora</th>
+                                         <td><?= $event['TIME']; ?></td>
+                                    </tr>
+                                    <tr>
+                                         <th class="text-primary">Dirección IP del cliente</th>
+                                          <td><?= $event['AT_IP']; ?></td>
+                                    </tr>
+                                    <tr>
+                                         <th class="text-primary">Puerto de entrada</th>
+                                         <td><?= $event['PORT']; ?></td>
+                                    </tr>
+                                    <tr>
+                                         <th class="text-primary">Script en ejecución</th>
+                                         <td><?= $event['SCRIPT']; ?></td>
+                                    </tr>
+                                </table>
+                           </div>
+                           <button type="button" class="btn btn-primary" id="download_logs">Descargar logs</button>
+                           <button type="button" class="btn btn-primary" id="delete_logs">Borrar logs</button>
+                       <?php endforeach; ?>
+                  </div>
+                </div>
+              </div>
               </div>
             </div>
           </div>
@@ -204,74 +327,6 @@
       </footer>
     </div>
   </div>
-  <div class="fixed-plugin">
-    <div class="dropdown show-dropdown">
-      <a href="#" data-toggle="dropdown">
-        <i class="fa fa-cog fa-2x"> </i>
-      </a>
-      <ul class="dropdown-menu">
-        <li class="header-title"> Sidebar Filters</li>
-        <li class="adjustments-line">
-          <a href="javascript:void(0)" class="switch-trigger active-color">
-            <div class="badge-colors ml-auto mr-auto">
-              <span class="badge filter badge-purple" data-color="purple"></span>
-              <span class="badge filter badge-azure" data-color="azure"></span>
-              <span class="badge filter badge-green" data-color="green"></span>
-              <span class="badge filter badge-warning" data-color="orange"></span>
-              <span class="badge filter badge-danger" data-color="danger"></span>
-              <span class="badge filter badge-rose active" data-color="rose"></span>
-            </div>
-            <div class="clearfix"></div>
-          </a>
-        </li>
-        <li class="header-title">Images</li>
-        <li class="active">
-          <a class="img-holder switch-trigger" href="javascript:void(0)">
-            <img src="../assets/img/sidebar-1.jpg" alt="">
-          </a>
-        </li>
-        <li>
-          <a class="img-holder switch-trigger" href="javascript:void(0)">
-            <img src="../assets/img/sidebar-2.jpg" alt="">
-          </a>
-        </li>
-        <li>
-          <a class="img-holder switch-trigger" href="javascript:void(0)">
-            <img src="../assets/img/sidebar-3.jpg" alt="">
-          </a>
-        </li>
-        <li>
-          <a class="img-holder switch-trigger" href="javascript:void(0)">
-            <img src="../assets/img/sidebar-4.jpg" alt="">
-          </a>
-        </li>
-        <li class="button-container">
-          <a href="https://www.creative-tim.com/product/material-dashboard" target="_blank" class="btn btn-primary btn-block">Free Download</a>
-        </li>
-        <!-- <li class="header-title">Want more components?</li>
-            <li class="button-container">
-                <a href="https://www.creative-tim.com/product/material-dashboard-pro" target="_blank" class="btn btn-warning btn-block">
-                  Get the pro version
-                </a>
-            </li> -->
-        <li class="button-container">
-          <a href="https://demos.creative-tim.com/material-dashboard/docs/2.1/getting-started/introduction.html" target="_blank" class="btn btn-default btn-block">
-            View Documentation
-          </a>
-        </li>
-        <li class="button-container github-star">
-          <a class="github-button" href="https://github.com/creativetimofficial/material-dashboard" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star ntkme/github-buttons on GitHub">Star</a>
-        </li>
-        <li class="header-title">Thank you for 95 shares!</li>
-        <li class="button-container text-center">
-          <button id="twitter" class="btn btn-round btn-twitter"><i class="fa fa-twitter"></i> &middot; 45</button>
-          <button id="facebook" class="btn btn-round btn-facebook"><i class="fa fa-facebook-f"></i> &middot; 50</button>
-          <br>
-          <br>
-        </li>
-      </ul>
-    </div>
-  </div>
   <!--   Core JS Files   -->
   <script src="../code/js/core/jquery.min.js"></script>
   <script src="../code/js/core/popper.min.js"></script>
@@ -306,7 +361,6 @@
   <!-- Library for adding dinamically elements -->
   <script src="../code/js/plugins/arrive.min.js"></script>
   <!--  Google Maps Plugin    -->
-
   <!-- Chartist JS -->
   <script src="../code/js/plugins/chartist.min.js"></script>
   <!--  Notifications Plugin    -->
@@ -485,6 +539,22 @@
         });
       });
     });
+  </script>
+  <script>
+     var acc = document.getElementsByClassName("accordion");
+     var i;
+
+     for (i = 0; i < acc.length; i++) {
+       acc[i].addEventListener("click", function() {
+         this.classList.toggle("active");
+         var panel = this.nextElementSibling;
+         if (panel.style.maxHeight) {
+           panel.style.maxHeight = null;
+         } else {
+           panel.style.maxHeight = panel.scrollHeight + "px";
+         }
+       });
+     }
   </script>
 </body>
 

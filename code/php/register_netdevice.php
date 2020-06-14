@@ -28,7 +28,7 @@ $pass = trim($_POST['pass']);
 // Validating fields
 
 if ($type != 'switch' && $type != 'ap') {
-     echo '<strong>Introduce un tipo de dispositivo válido</strong>';
+     echo '*Introduce un tipo de dispositivo válido';
      if ($type != 'null') {
           newLog($_SESSION['user']['NAME'] . ' ha intentado modificar el select con un valor no válido [' . $type . ']','Alerta de Seguridad',3);
      }
@@ -36,13 +36,13 @@ if ($type != 'switch' && $type != 'ap') {
 }
 
 if (!filter_var($ip, FILTER_VALIDATE_IP)) {
-     echo '<strong>Introduce una dirección IP válida</strong>';
+     echo '*Introduce una dirección IP válida';
      newLog('Error al añadir un nuevo dispositivo de red, IP errónea','Errores de formulario',1);
      die();
 }
 
 if ($telnet != '0' && $telnet != '1') {
-     echo '<strong>Selecciona un valor válido para el soporte Telnet/SSH</strong>';
+     echo '*Selecciona un valor válido para el soporte Telnet/SSH';
      if ($telnet != 'null') {
           newLog($_SESSION['user']['NAME'] . ' intentó modificar el valor del soporte Telnet con [' . $telnet . '] en el formulario de registro de equipamiento de red','Alerta de Seguridad',3);
      }
@@ -50,7 +50,7 @@ if ($telnet != '0' && $telnet != '1') {
 }
 
 if ($ssh != 0 && $ssh != 1) {
-     echo '<strong>Selecciona un valor válido para el soporte Telnet/SSH</strong>';
+     echo '*Selecciona un valor válido para el soporte Telnet/SSH';
      if ($ssh != 'null') {
           newLog($_SESSION['user']['NAME'] . ' intentó modificar el valor del soporte SSH  con [' . $ssh . '] en el formulario de registro de equipamiento de red','Alerta de Seguridad',3);
      }
@@ -58,7 +58,7 @@ if ($ssh != 0 && $ssh != 1) {
 }
 
 if ($brand != 'cisco' && $brand != 'openwrt') {
-     echo '<strong>Introduce una marca compatible</strong>';
+     echo '*Introduce una marca compatible';
      if ($brand != 'null') {
           newLog($_SESSION['user']['NAME'] . ' ha intentado modificar el select de la marca del formulario de registro de dispositivos de red con un valor no válido [' . $type . ']','Alerta de Seguridad',3);
      }
@@ -74,7 +74,7 @@ if (!$ssh) {
      try {
           $tcon = new Telnet($ip);
      } catch (Exception $e) {
-          echo 'Hubo un problema al conectarse al dispositivo de red vía Telnet';
+          echo '*Hubo un problema al conectarse al dispositivo de red vía Telnet';
           newLog($e->getMessage(),'Formulario de registro de dispositivos de red',1);
           die();
      }
@@ -84,7 +84,7 @@ if ($ssh) {
      // Trying to connect via ssh
      $sshc = new Net_SSH2($ip);
      if (!@$sshc->getServerPublicHostKey()) {
-          echo 'Hubo un problema al conectarse al dispositivo de red vía SSH';
+          echo '*Hubo un problema al conectarse al dispositivo de red vía SSH';
           newLog('Error en la conexión SSH con el dispositivo ['.$ip.']','Formulario de registro de dispositivos de red',1);
           die();
      }
@@ -101,7 +101,7 @@ if ($brand == 'cisco') {
           $cnd = new CiscoNetDeviceTelnet($tcon,$pass);
           // Authenticate
           if (!$cnd->login()) {
-               echo 'Contraseña incorrecta';
+               echo '*Contraseña incorrecta';
                newLog('Autenticacion incorrecta','Autenticacion telnet dispositivo Cisco',1);
                die();
           }
@@ -114,7 +114,7 @@ if ($brand == 'cisco') {
           // Insert into database
           $insert_db = $cnd->intoDB($pdo);
           if (!$insert_db) {
-               echo 'Error interno al agregar el dispositivo de red al sistema, puede que el dispositivo ya exista';
+               echo '*Error interno al agregar el dispositivo de red al sistema, puede que el dispositivo ya exista';
                newLog($insert_db,'Agregar dispositivos de red',4);
                die();
           } else {
@@ -122,7 +122,7 @@ if ($brand == 'cisco') {
                for ($i=0; $i < count($ports); $i++) {
                     $new_port_db = $db->newPort($pdo,$ports[$i],$mac);
                     if (is_string($new_port_db)) {
-                         echo 'Error interno al agregar el puerto del dispositivo de red al sistema';
+                         echo '*Error interno al agregar el puerto del dispositivo de red al sistema';
                          newLog($new_port_db,'Agregar puertos de los dispositivos de red',4);
                          die();
                     }
@@ -131,11 +131,11 @@ if ($brand == 'cisco') {
           }
      }
      if (isset($sshcon)) {
-          echo 'En desarrollo';
+          echo '-En desarrollo';
           die();
      }
      if (!isset($tcon) && !isset($sshc)) {
-          echo 'No se ha conectado al dispositivo de red correctamente';
+          echo '*No se ha conectado al dispositivo de red correctamente';
           newLog('No se ha conectado al dispositivo de red correctamente','Registro de dispositivos de red',1);
           die();
      }
@@ -145,6 +145,7 @@ if ($brand == 'openwrt') {
      // Check if there is a Telnet connection active
      if (isset($tcon)) {
           // Future implementation
+          echo '-En desarrollo';
           die();
      }
      // Check if there is a SSH connection
@@ -160,7 +161,7 @@ if ($brand == 'openwrt') {
                $insert_db = $wnd->intoDB($pdo);
                // Insert the object in the database
                if (!$insert_db) {
-                    echo 'Error interno al agregar el dispositivo de red al sistema';
+                    echo '*Error interno al agregar el dispositivo de red al sistema';
                     newLog($insert_db,'Agregar dispositivos de red',4);
                     die();
                }
@@ -170,7 +171,7 @@ if ($brand == 'openwrt') {
                }
                echo 'Dispositivo añadido correctamente';
           } else {
-               echo 'Contraseña incorrecta';
+               echo '*Contraseña incorrecta';
                newLog('Autenticacion incorrecta','Autenticacion ssh dispositivo OpenWRT',1);
                die();
           }
@@ -178,7 +179,7 @@ if ($brand == 'openwrt') {
      }
      // Error if no connection detected
      if (!isset($tcon) && !isset($sshc)) {
-          echo 'No se ha conectado al dispositivo de red correctamente';
+          echo '*No se ha conectado al dispositivo de red correctamente';
           newLog('No se ha conectado al dispositivo de red correctamente','Registro de dispositivos de red',1);
           die();
      }
