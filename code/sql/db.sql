@@ -1,3 +1,12 @@
+CREATE TABLE Medical_eq (
+     MACEQ varchar(17),
+     TYPE varchar(50) NOT NULL,
+     BRAND varchar(50),
+     MODEL varchar(50),
+	LAST_SEEN date NOT NULL,
+     PRIMARY KEY (MACEQ)
+);
+
 CREATE TABLE Net_devices (
 	MACND varchar(17),
      TYPE varchar(50) NOT NULL,
@@ -7,16 +16,8 @@ CREATE TABLE Net_devices (
      NPORTS int(3) NOT NULL,
      BRAND varchar(50) NOT NULL,
      MODEL varchar(50) NOT NULL,
-		 LAST_SEEN date NOT NULL,
+	PASS varchar(255) NOT NULL,
      PRIMARY KEY (MACND)
-);
-
-CREATE TABLE Medical_eq (
-     MACEQ varchar(17),
-     TYPE varchar(50) NOT NULL,
-     BRAND varchar(50),
-     MODEL varchar(50),
-     PRIMARY KEY (MACEQ)
 );
 
 CREATE TABLE Ports (
@@ -34,7 +35,10 @@ CREATE TABLE Ports (
 CREATE TABLE Users (
      ID int AUTO_INCREMENT,
      NAME varchar(100) NOT NULL,
+	SURNAME varchar(255),
      USERNAME varchar(50) NOT NULL,
+	TID varchar(255) NOT NULL,
+	EMAIL varchar(255) NOT NULL,
      PASS varchar(255) NOT NULL,
      ROLE varchar(10) NOT NULL,
      PRIMARY KEY (ID)
